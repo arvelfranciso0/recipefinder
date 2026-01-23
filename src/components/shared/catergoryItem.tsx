@@ -24,9 +24,7 @@ export default function CategoryItem({
         >
           <Icon className={`w-10 h-10 ${colorClass}`} />
         </div>
-        <p className="mt-3 text-center font-bold text-sm text-charcoal dark:text-gray-200">
-          {label}
-        </p>
+        <p className="mt-3 text-center font-bold text-sm text-muted">{label}</p>
       </div>
     </Link>
   );

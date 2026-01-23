@@ -48,9 +48,9 @@ export const CustomSelect = ({
       {/* Trigger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between w-full px-4 py-3 bg-white dark:bg-white/5 border rounded-xl outline-none text-sm font-semibold transition-all duration-200 
-          ${isOpen ? "border-primary ring-2 ring-primary/10" : "border-[#e0e3dd] dark:border-white/10 hover:border-primary/50"}
-          dark:text-white text-[#141612]`}
+        className={`cursor-pointer flex items-center justify-between w-full px-4 py-3 bg-background border border-primary rounded-xl outline-none text-sm font-semibold transition-all duration-200 
+          ${isOpen ? "ring-2 ring-primary/10" : "  hover:border-primary/50"}
+          `}
       >
         <span>{selected}</span>
         <ChevronDown
@@ -60,13 +60,13 @@ export const CustomSelect = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#1c2317] border border-[#e0e3dd] dark:border-white/10 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-150">
+        <div className="absolute  z-50 w-full mt-2 bg-background border  dark:border-primary rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-150">
           <div className="py-1 max-h-60 overflow-y-auto">
             {options.map((option) => (
               <button
                 key={option.value}
                 onClick={() => handleSelect(option)}
-                className="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-left hover:bg-primary/10 hover:text-primary transition-colors dark:text-gray-300 dark:hover:bg-primary/20 dark:hover:text-white"
+                className="flex cursor-pointer items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-left hover:bg-primary/10 hover:text-primary transition-colors text-foreground dark:hover:bg-primary dark:hover:text-primary-foreground"
               >
                 {option.label}
                 {selected === option.label && (

@@ -1,11 +1,11 @@
 "use client";
 
-import { ChefHat, Play, PlayCircle } from "lucide-react";
+import { CookingPot, Play, PlayCircle } from "lucide-react";
 import {
   IngredientList,
   RecipeHero,
   RecipeStats,
-} from "../_components/recipeDetails";
+} from "../_components/recipe-details";
 
 export default function RecipeDetailPage() {
   const ingredients = [
@@ -45,26 +45,24 @@ export default function RecipeDetailPage() {
           <RecipeStats />
 
           {/* Preparation Steps */}
-          <section className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800">
-            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 dark:text-white">
-              <ChefHat className="text-primary w-7 h-7" />
+          <section className="bg-background rounded-3xl p-8 shadow-sm">
+            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-foreground">
+              <CookingPot className="text-primary w-7 h-7" />
               Preparation Steps
             </h3>
             <div className="space-y-10">
               {steps.map((step, i) => (
                 <div key={i} className="flex gap-6">
                   <div className="flex-none">
-                    <div className="size-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-primary/30">
+                    <div className="size-10 rounded-full bg-primary text-foreground flex items-center justify-center font-bold text-lg shadow-lg shadow-primary/30">
                       {i + 1}
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <h4 className="text-lg font-bold dark:text-white">
+                    <h4 className="text-lg font-bold text-foreground">
                       {step.title}
                     </h4>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {step.desc}
-                    </p>
+                    <p className="text-muted leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -73,14 +71,14 @@ export default function RecipeDetailPage() {
 
           {/* Video Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-bold flex items-center gap-3 px-2 dark:text-white">
+            <h3 className="text-2xl font-bold flex items-center gap-3 px-2 text-foreground">
               <PlayCircle className="text-primary w-7 h-7" />
               Video Tutorial
             </h3>
-            <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl border-4 border-white dark:border-slate-900 group cursor-pointer">
-              <div className="absolute inset-0 bg-slate-900/40 flex items-center justify-center z-10">
-                <div className="size-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform">
-                  <Play className="text-white w-10 h-10 fill-current" />
+            <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-sm group cursor-pointer">
+              <div className="absolute inset-0 bg-foreground-900/40 flex items-center justify-center z-10">
+                <div className="size-20 bg-background/30 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-primary-foreground/50 group-hover:scale-110 transition-transform">
+                  <Play className="text-primary-foreground w-10 h-10 fill-current" />
                 </div>
               </div>
               <img

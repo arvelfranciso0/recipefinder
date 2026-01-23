@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+import { ThemeProvider } from "next-themes";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -21,13 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={jakarta.variable}>
-      <body className="antialiased transition-colors duration-300">
-        <div className="min-h-screen">
-          <Navbar />
-          <main className="max-w-7xl mx-auto px-6 pb-20">{children}</main>
-          <Footer />
-        </div>
+    <html suppressHydrationWarning lang="en" className={`${jakarta.variable}`}>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="antialiased transition-colors duration-300">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
