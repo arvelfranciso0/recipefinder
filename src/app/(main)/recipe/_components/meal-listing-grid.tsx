@@ -1,20 +1,7 @@
 "use client";
 
 import MealCard from "@/components/shared/mealCard";
-import { Clock, Star, ArrowRight, Heart } from "lucide-react";
-
-interface Recipe {
-  id: number;
-  title: string;
-  tag: string;
-  time: string;
-  rating: number;
-  image: string;
-  isPopular?: boolean;
-  isNew?: boolean;
-  difficulty: string;
-  tagColor: string;
-}
+import { Recipe } from "@/types/recipe-types";
 
 const recipes: Recipe[] = [
   {
@@ -63,7 +50,6 @@ const recipes: Recipe[] = [
     difficulty: "Difficult",
     tagColor: "text-primary",
   },
-  // ... add more as needed
 ];
 
 export const MealListingGrid = () => {
@@ -79,7 +65,6 @@ export const MealListingGrid = () => {
           tag={recipe.tag}
           tagColor={recipe.tagColor}
           image={recipe.image}
-          likes="12"
           rating={recipe.rating}
         />
       ))}
