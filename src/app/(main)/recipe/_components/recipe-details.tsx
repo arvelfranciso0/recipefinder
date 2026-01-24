@@ -77,7 +77,7 @@ const RecipeStats = () => (
     ].map((stat, i) => (
       <div
         key={i}
-        className="flex-1 bg-background p-4 rounded-2xl shadow-sm flex flex-col items-center"
+        className="flex-1 dark:bg-white/5 p-4 rounded-2xl shadow-sm flex flex-col items-center"
       >
         <div className="text-primary mb-1">{stat.icon}</div>
         <span className="text-sm text-muted font-bold uppercase tracking-wider">
@@ -92,7 +92,7 @@ const RecipeStats = () => (
 // --- Sub-component: Ingredients ---
 const IngredientList = ({ ingredients }: { ingredients: any[] }) => (
   <aside className="lg:col-span-4 space-y-6">
-    <div className="bg-background rounded-2xl p-6 shadow-sm  sticky top-24">
+    <div className=" dark:bg-white/5 rounded-2xl p-6 shadow-sm  sticky top-24">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
           <ShoppingBasket className="text-primary w-6 h-6" />
