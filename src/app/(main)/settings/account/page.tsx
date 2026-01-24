@@ -1,14 +1,21 @@
+"use client";
 import { Shield, Link as LinkIcon, Lock, Eye } from "lucide-react";
 import { InputField } from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import { SocialToggle } from "./_components/social-toggle";
 import { Google } from "@/components/icons/google";
 import { Fb } from "@/components/icons/fb";
+import { useState } from "react";
+import { VerificationModal } from "./_components/verification";
 
 export default function AccountSettings() {
+  const [showVerification, setShowVerifcation] = useState(false);
   return (
     <section className="flex-1 space-y-8">
-      {/* Page Header */}
+      <VerificationModal
+        isOpen={showVerification}
+        onClose={() => setShowVerifcation(false)}
+      />
       <div>
         <h2 className="text-3xl font-black text-foreground">
           Account Settings
@@ -116,7 +123,9 @@ export default function AccountSettings() {
             </div>
           </div>
           <div className="pt-2">
-            <Button variant="primary">Update Password</Button>
+            <Button variant="primary" onClick={() => setShowVerifcation(true)}>
+              Update Password
+            </Button>
           </div>
         </div>
       </div>
