@@ -11,7 +11,7 @@ jobs:
       - name: Move card if PR targets development
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           script: |
             const pr = context.payload.pull_request;
 
