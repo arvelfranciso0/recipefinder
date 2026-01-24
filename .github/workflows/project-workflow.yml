@@ -24,9 +24,9 @@ jobs:
               for (const issue_number of issueNumbers) {
                 // Move issue card to Development column
                 // First, get project and columns
-                const projectName = "Your Project Name"; // Replace
+                const projectName = "Recipe Finder Task"; // Replace
                 const columns = await github.rest.projects.listColumns({
-                  project_id: YOUR_PROJECT_ID  // Replace with your Project ID
+                  project_id: 5
                 });
                 const devColumn = columns.data.find(c => c.name === "Development");
 
