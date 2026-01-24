@@ -1,0 +1,19 @@
+name: Production Release Sync
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main # Only triggers when merging into main
+
+jobs:
+  move_and_close:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move Card to Done
+        # This uses the GitHub GraphQL API to move the project item
+        uses: alex-page/github-project-automation-plus@v0.9.0
+        with:
+          project: Your Project Name
+          column: Done
+          repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
