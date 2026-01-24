@@ -1,27 +1,42 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme {
-  /* Font Family Setup */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
   --font-display: var(--font-jakarta);
-
-  /* Color Palette - Extracted from your HTML */
-  --color-primary: #65a338;
-  --color-primary-foreground: #ffffff;
-  --color-accent-peach: #ffb49c;
-
-  --color-background-light: #f7f8f6;
-  --color-background-dark: #181e14;
-
-  --color-charcoal: #25282b;
-  --color-muted: #636669;
 }
 
-/* Custom Utilities */
+:root {
+  /* Light Mode Values */
+  --background: #f7f8f6;
+  --foreground: #25282b;
+  --primary: #65a338;
+  --primary-foreground: #ffffff;
+  --muted: #636669;
+}
+
+/* If you use 'next-themes' (standard for shadcn), 
+   it toggles a .dark class on the html element 
+*/
+.dark {
+  --background: #181e14;
+  --foreground: #f3f4f6;
+  --primary: #65a338;
+  --primary-foreground: #ffffff;
+  --muted: #9ca3af;
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-display);
+  }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -30,22 +45,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
   .soft-shadow {
     box-shadow: 0 4px 20px -2px rgba(37, 40, 43, 0.05);
-  }
-}
-
-/* Base Styles */
-body {
-  background-color: var(--color-background-light);
-  color: var(--color-charcoal);
-  font-family: var(--font-display);
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--color-background-dark);
-    color: #f3f4f6;
   }
 }

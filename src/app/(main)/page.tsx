@@ -1,9 +1,9 @@
 "use client";
 
-import Hero from "./_components/hero";
 import Categories from "./_components/categories";
-import FeaturedMeals from "./_components/featureMeals";
-import Newsletter from "./_components/newsLetter";
+import FeaturedMeals from "./_components/feature-meals";
+import Hero from "./_components/hero";
+import Newsletter from "./_components/news-letter";
 
 export default function Home() {
   return (
@@ -17,8 +17,8 @@ export default function Home() {
       {/* Featured Meals Grid */}
       <FeaturedMeals />
 
-      {/* Newsletter CTA */}
-      <Newsletter />
+      {/* TODO: This feature will add in the future */}
+      {/* <Newsletter /> */}
     </>
   );
 }

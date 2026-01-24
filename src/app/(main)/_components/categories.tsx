@@ -19,7 +19,7 @@ export default function Categories() {
     <section className="py-12">
       <div className="flex items-end justify-between px-2 mb-8">
         <div>
-          <h3 className="text-2xl font-bold text-charcoal dark:text-white">
+          <h3 className="text-2xl font-bold text-foreground ">
             Browse Categories
           </h3>
           <p className="text-muted dark:text-gray-400">
@@ -39,8 +39,8 @@ export default function Categories() {
         <CategoryItem
           label="Seafood"
           icon={Fish}
-          bgClass="bg-accent-peach/20"
-          colorClass="text-accent-peach"
+          bgClass="bg-fuchsia-100 dark:bg-fuchsia-900/20"
+          colorClass="text-fuchsia-400"
         />
         <CategoryItem
           label="Dessert"

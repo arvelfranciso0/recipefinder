@@ -1,18 +1,8 @@
 "use client";
 
+import { Recipe } from "@/types/recipe-types";
 import { Heart, Clock, BarChart2, ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
-
-interface MetaCardProps {
-  title: string;
-  time: string;
-  difficulty: string;
-  tag: string;
-  tagColor: string;
-  image: string;
-  id: number;
-  rating: string;
-}
 
 export default function MealCard({
   title,
@@ -23,7 +13,8 @@ export default function MealCard({
   image,
   id,
   rating,
-}: any) {
+  isFavorite,
+}: Recipe) {
   return (
     <article className="bg-white dark:bg-white/5 rounded-3xl overflow-hidden soft-shadow group hover:shadow-xl transition-all duration-300 border border-transparent dark:border-white/5">
       <div className="relative h-64 w-full overflow-hidden">
@@ -43,8 +34,14 @@ export default function MealCard({
         </div>
 
         {/* Favorite Button */}
-        <button className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-charcoal hover:text-red-500 transition-colors">
-          <Heart className="w-5 h-5" />
+        <button className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-foreground hover:text-red-500 transition-colors">
+          <Heart
+            className={`w-5 h-5 transition-colors duration-300 ${
+              isFavorite
+                ? "text-primary fill-primary"
+                : "text-muted fill-transparent"
+            }`}
+          />
         </button>
       </div>
 
@@ -58,7 +55,7 @@ export default function MealCard({
           </span>
         </div>
 
-        <h4 className="text-xl font-bold text-charcoal dark:text-white group-hover:text-primary transition-colors">
+        <h4 className="text-xl font-bold text-foreground  group-hover:text-primary transition-colors">
           {title}
         </h4>
 
@@ -67,9 +64,7 @@ export default function MealCard({
           {rating && (
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              <span className="text-sm font-bold dark:text-gray-200">
-                {rating}
-              </span>
+              <span className="text-sm font-bold text-muted">{rating}</span>
             </div>
           )}
 
