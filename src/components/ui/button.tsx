@@ -20,7 +20,7 @@ export default function Button({
       "bg-primary text-white hover:bg-primary-foreground hover:text-gray-800 shadow-lg shadow-primary/20",
     outline:
       "border border-gray-200 hover:bg-primary hover:border-primary-foreground text-foreground shadow-sm",
-    ghost: "hover:bg-gray-100 hover:text-primary text-muted ",
+    ghost: " hover:text-primary text-muted ",
     warning: "bg-red-800  hover:bg-red-500",
   };
 
