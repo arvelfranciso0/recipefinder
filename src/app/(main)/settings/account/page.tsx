@@ -7,6 +7,7 @@ import { Google } from "@/components/icons/google";
 import { Fb } from "@/components/icons/fb";
 import { useState } from "react";
 import { VerificationModal } from "./_components/verification";
+import Card from "@/components/ui/card";
 
 export default function AccountSettings() {
   const [showVerification, setShowVerifcation] = useState(false);
@@ -25,7 +26,7 @@ export default function AccountSettings() {
         </p>
       </div>
 
-      <div className="bg-white dark:bg-white/5 rounded-3xl p-6 md:p-8 soft-shadow border border-gray-100 dark:border-white/10">
+      <Card>
         <div className="flex items-center gap-4 mb-8">
           <div className=" dark:bg-white/10 p-3 rounded-2xl text-foreground">
             <Shield className="w-6 h-6" />
@@ -128,10 +129,10 @@ export default function AccountSettings() {
             </Button>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Connected Accounts Card */}
-      <div className="bg-white dark:bg-white/5 rounded-3xl p-6 md:p-8 soft-shadow border border-gray-100 dark:border-white/10">
+      <Card>
         <div className="flex items-center gap-4 mb-8">
           <div className="bg-slate-100 dark:bg-white/10 p-3 rounded-2xl text-foreground">
             <LinkIcon className="w-6 h-6" />
@@ -158,7 +159,7 @@ export default function AccountSettings() {
             icon={<Fb />}
           />
         </div>
-      </div>
+      </Card>
 
       {/* Footer Actions */}
       <div className="flex items-center justify-end gap-4 pt-4">

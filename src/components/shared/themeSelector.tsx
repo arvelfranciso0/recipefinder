@@ -4,6 +4,7 @@ import { Sun, Moon, Check } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ThemeSelectorSkeleton } from "./themeSelectorSkeleton";
+import Card from "../ui/card";
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme();
@@ -15,7 +16,7 @@ export function ThemeSelector() {
 
   if (!mounted) return <ThemeSelectorSkeleton />;
   return (
-    <div className="bg-white dark:bg-white/5 rounded-3xl p-8 soft-shadow border border-gray-100 dark:border-white/10">
+    <Card>
       <div className="mb-6">
         <h3 className="text-xl font-bold">Theme Preference</h3>
         <p className="text-sm text-muted">
@@ -77,6 +78,6 @@ export function ThemeSelector() {
           </span>
         </button>
       </div>
-    </div>
+    </Card>
   );
 }

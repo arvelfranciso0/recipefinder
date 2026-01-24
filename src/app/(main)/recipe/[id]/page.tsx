@@ -45,7 +45,7 @@ export default function RecipeDetailPage() {
           <RecipeStats />
 
           {/* Preparation Steps */}
-          <section className="bg-background rounded-3xl p-8 shadow-sm">
+          <section className="dark:bg-white/5 rounded-3xl p-8 shadow-sm">
             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-foreground">
               <CookingPot className="text-primary w-7 h-7" />
               Preparation Steps
@@ -70,7 +70,7 @@ export default function RecipeDetailPage() {
           </section>
 
           {/* Video Section */}
-          <section className="space-y-4">
+          <section className="space-y-4 ">
             <h3 className="text-2xl font-bold flex items-center gap-3 px-2 text-foreground">
               <PlayCircle className="text-primary w-7 h-7" />
               Video Tutorial
