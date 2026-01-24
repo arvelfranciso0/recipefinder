@@ -1,19 +1,45 @@
-name: Production Release Sync
+name: Move Project Card to Development
+
 on:
   pull_request:
-    types: [closed]
-    branches:
-      - main # Only triggers when merging into main
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
-  move_and_close:
-    if: github.event.pull_request.merged == true
+  move-card:
     runs-on: ubuntu-latest
     steps:
-      - name: Move Card to Done
-        # This uses the GitHub GraphQL API to move the project item
-        uses: alex-page/github-project-automation-plus@v0.9.0
+      - name: Move card if PR targets development
+        uses: actions/github-script@v6
         with:
-          project: Your Project Name
-          column: Done
-          repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Only trigger if PR targets development
+            if (pr.base.ref === "development") {
+              // List all linked issues
+              if (!pr.body) return;
+              const issueNumbers = [...pr.body.matchAll(/#(\d+)/g)].map(m => m[1]);
+
+              for (const issue_number of issueNumbers) {
+                // Move issue card to Development column
+                // First, get project and columns
+                const projectName = "Your Project Name"; // Replace
+                const columns = await github.rest.projects.listColumns({
+                  project_id: YOUR_PROJECT_ID  // Replace with your Project ID
+                });
+                const devColumn = columns.data.find(c => c.name === "Development");
+
+                // Find the card in the project
+                const cards = await github.rest.projects.listCards({
+                  column_id: devColumn.id
+                });
+
+                // (Simplified) Create card if not exists
+                await github.rest.projects.createCard({
+                  column_id: devColumn.id,
+                  content_id: issue_number,
+                  content_type: "Issue"
+                });
+              }
+            }
