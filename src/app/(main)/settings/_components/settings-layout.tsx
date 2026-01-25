@@ -1,34 +1,18 @@
 "use client";
 
+import { sideNavbar } from "@/libs/urls";
 import { getActiveClass } from "@/libs/utils";
 import { User, Settings, Sliders, Bell, LogOut } from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navItems = [
-  { icon: User, label: "Profile", href: "/settings/profile", active: false },
-  { icon: Settings, label: "Account", href: "/settings/account", active: true },
-  {
-    icon: Sliders,
-    label: "Preferences",
-    href: "/settings/preferences",
-    active: false,
-  },
-  {
-    icon: Bell,
-    label: "Notifications",
-    href: "/settings/notifications",
-    active: false,
-  },
-];
-
 export function SettingsSidebar() {
   const pathname = usePathname();
   return (
     <aside className="w-full lg:w-64 space-y-2">
       <nav className="bg-white dark:bg-white/5 rounded-2xl p-2 soft-shadow border border-gray-100 dark:border-white/10">
-        {navItems.map((item) => {
+        {sideNavbar.map((item) => {
           const Icon = item.icon;
           return (
             <Link

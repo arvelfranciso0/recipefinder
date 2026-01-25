@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { InputField } from "@/components/ui/input";
 import { Eye, Lock } from "lucide-react";
+import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [check, setCheck] = useState(false);
 
   // TODO: Convert to a proper authentication
   const [isAuth, setIsAuth] = useLocalStorage<boolean>("isAuth", false);
@@ -112,7 +114,11 @@ export default function LoginPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Checkbox id="remember">
+              <Checkbox
+                id="remember"
+                onCheckedChange={() => setCheck(true)}
+                checked={check}
+              >
                 <label
                   htmlFor="remember"
                   className="text-sm cursor-pointer font-medium text-muted"
