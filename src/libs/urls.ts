@@ -103,7 +103,7 @@ export const sideNavbar: sideNavbarInterface[] = [
   {
     icon: Bell,
     label: "Notifications",
-    href: "/settings/notifications",
+    href: "/settings/notification",
     active: false,
   },
 ];
