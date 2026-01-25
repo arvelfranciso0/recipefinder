@@ -7,8 +7,10 @@ import SocialButton from "../_components/social-button";
 import Button from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputField } from "@/components/ui/input";
+import { useState } from "react";
 
 export default function SignUpPage() {
+  const [check, setCheck] = useState(false);
   return (
     <div className="min-h-screen flex">
       {/* --- Left Hero Section --- */}
@@ -154,7 +156,12 @@ export default function SignUpPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Checkbox id="terms" className="cursor-pointer">
+              <Checkbox
+                id="terms"
+                className="cursor-pointer"
+                onCheckedChange={() => setCheck(true)}
+                checked={check}
+              >
                 <label
                   className="text-xs cursor-pointer  font-semibold text-muted"
                   htmlFor="terms"
