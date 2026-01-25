@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/providers/auth-providers";
 import { InputField } from "../ui/input";
 import { getActiveClass } from "@/libs/utils";
+import Button from "../ui/button";
 
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
@@ -67,12 +68,11 @@ export default function Navbar() {
             {!isAuthenticated ? (
               /* --- GUEST VIEW --- */
               <div className="flex items-center gap-2">
-                <Link
-                  href={"/login"}
-                  className="text-sm font-bold text-foreground bg-primary-foreground px-5 py-2 shadow-md  rounded-lg transition-all"
-                >
-                  Log In
-                </Link>
+                <Button variant="ghost">
+                  <Link href={"/login"} className="">
+                    Log In
+                  </Link>
+                </Button>
                 <Link
                   href={"/signup"}
                   className="text-sm font-bold bg-primary text-white px-5 py-2.5 rounded-xl hover:bg-primary/90 shadow-md shadow-primary/20 active:scale-95 transition-all"

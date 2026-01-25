@@ -1,6 +1,6 @@
 "use client";
 
-import { Sun, Moon, Check } from "lucide-react";
+import { Sun, Moon, Check, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ThemeSelectorSkeleton } from "./themeSelectorSkeleton";
@@ -17,11 +17,16 @@ export function ThemeSelector() {
   if (!mounted) return <ThemeSelectorSkeleton />;
   return (
     <Card>
-      <div className="mb-6">
-        <h3 className="text-xl font-bold">Theme Preference</h3>
-        <p className="text-sm text-muted">
-          Choose how RecipeFinder looks for you.
-        </p>
+      <div className="mb-6 flex items-center gap-4">
+        <div className="bg-primary/10 p-3 rounded-2xl text-primary">
+          <Palette className="w-6 h-6" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold">Theme Preference</h3>
+          <p className="text-sm text-muted">
+            Choose how RecipeFinder looks for you.
+          </p>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Light Mode */}

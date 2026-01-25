@@ -1,6 +1,7 @@
-import { UrlTypes } from "@/types/url-types";
+import { sideNavbarInterface, UrlInterface } from "@/interface/urlInterface";
+import { Bell, Settings, Sliders, User } from "lucide-react";
 
-export const Urls: UrlTypes[] = [
+export const Urls: UrlInterface[] = [
   {
     id: "home",
     label: "Home",
@@ -34,7 +35,7 @@ export const Urls: UrlTypes[] = [
   },
 ];
 
-export const QuickLinks: UrlTypes[] = [
+export const QuickLinks: UrlInterface[] = [
   {
     id: "home",
     label: "Home",
@@ -62,7 +63,7 @@ export const QuickLinks: UrlTypes[] = [
   },
 ];
 
-export const QuickCategories: UrlTypes[] = [
+export const QuickCategories: UrlInterface[] = [
   {
     id: "healthy-eating",
     label: "Healthy Eating",
@@ -87,5 +88,22 @@ export const QuickCategories: UrlTypes[] = [
     id: "filipino-dishes",
     label: "Filipino Dishes",
     href: "filipino-dishes",
+  },
+];
+
+export const sideNavbar: sideNavbarInterface[] = [
+  { icon: User, label: "Profile", href: "/settings/profile", active: false },
+  { icon: Settings, label: "Account", href: "/settings/account", active: true },
+  {
+    icon: Sliders,
+    label: "Preferences",
+    href: "/settings/preference",
+    active: false,
+  },
+  {
+    icon: Bell,
+    label: "Notifications",
+    href: "/settings/notifications",
+    active: false,
   },
 ];
