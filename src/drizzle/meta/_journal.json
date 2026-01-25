@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1769330841415,
+      "tag": "0000_initial-migration",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769331193618,
+      "tag": "0001_enum-migration",
+      "breakpoints": true
+    }
+  ]
+}
