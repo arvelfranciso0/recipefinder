@@ -1,10 +1,11 @@
 "use client";
+import Card from "@/components/ui/card";
 import { InputField } from "@/components/ui/input";
 import { Camera, Mail, User } from "lucide-react";
 
 export function ProfileForm() {
   return (
-    <div className="bg-white dark:bg-white/5 rounded-3xl p-8 soft-shadow border border-gray-100 dark:border-white/10">
+    <Card>
       <div className="flex items-center gap-6 mb-8">
         <div className="relative">
           <img
@@ -68,6 +69,6 @@ export function ProfileForm() {
           />
         </div>
       </form>
-    </div>
+    </Card>
   );
 }
