@@ -1,7 +1,7 @@
 "use client";
 
 import { Recipe } from "@/types/recipe-types";
-import { Heart, Clock, BarChart2, ChevronRight, Star } from "lucide-react";
+import { Heart, Clock, BarChart2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function MealCard({
@@ -23,15 +23,6 @@ export default function MealCard({
           className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
           style={{ backgroundImage: `url('${image}')` }}
         />
-
-        {/* Tag */}
-        <div className="absolute top-4 left-4">
-          <span
-            className={`bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold ${tagColor}`}
-          >
-            {tag}
-          </span>
-        </div>
 
         {/* Favorite Button */}
         <button className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-foreground hover:text-red-500 transition-colors">
@@ -60,13 +51,12 @@ export default function MealCard({
         </h4>
 
         <div className="mt-6 flex items-center justify-between">
-          {/* Stars Stack */}
-          {rating && (
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              <span className="text-sm font-bold text-muted">{rating}</span>
-            </div>
-          )}
+          {/* Tag */}
+          <span
+            className={`bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold ${tagColor}`}
+          >
+            {tag}
+          </span>
 
           <div className="mt-auto flex items-center justify-between gap-3">
             <Link

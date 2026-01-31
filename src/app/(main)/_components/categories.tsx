@@ -1,17 +1,8 @@
 "use client";
 
 import CategoryItem from "@/components/shared/catergoryItem";
-import {
-  ArrowRight,
-  Cake,
-  Coffee,
-  Egg,
-  Fish,
-  Leaf,
-  Soup,
-  UtensilsCrossed,
-  Wheat,
-} from "lucide-react";
+import { categories } from "@/libs/data";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Categories() {
@@ -36,54 +27,15 @@ export default function Categories() {
       </div>
 
       <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-2 px-2">
-        <CategoryItem
-          label="Seafood"
-          icon={Fish}
-          bgClass="bg-fuchsia-100 dark:bg-fuchsia-900/20"
-          colorClass="text-fuchsia-400"
-        />
-        <CategoryItem
-          label="Dessert"
-          icon={Cake}
-          bgClass="bg-primary/10"
-          colorClass="text-primary"
-        />
-        <CategoryItem
-          label="Vegetarian"
-          icon={Leaf}
-          bgClass="bg-orange-100 dark:bg-orange-900/20"
-          colorClass="text-orange-400"
-        />
-        <CategoryItem
-          label="Beef"
-          icon={UtensilsCrossed}
-          bgClass="bg-red-100 dark:bg-red-900/20"
-          colorClass="text-red-400"
-        />
-        <CategoryItem
-          label="Chicken"
-          icon={Egg}
-          bgClass="bg-yellow-100 dark:bg-yellow-900/20"
-          colorClass="text-yellow-500"
-        />
-        <CategoryItem
-          label="Pasta"
-          icon={Wheat}
-          bgClass="bg-blue-100 dark:bg-blue-900/20"
-          colorClass="text-blue-400"
-        />
-        <CategoryItem
-          label="Breakfast"
-          icon={Coffee}
-          bgClass="bg-purple-100 dark:bg-purple-900/20"
-          colorClass="text-purple-400"
-        />
-        <CategoryItem
-          label="Soup"
-          icon={Soup}
-          bgClass="bg-green-100 dark:bg-green-900/20"
-          colorClass="text-green-400"
-        />
+        {categories.map((category) => (
+          <CategoryItem
+            key={category.id}
+            label={category.label}
+            icon={category.icon}
+            bgClass={category.bgClass}
+            colorClass={category.colorClass}
+          />
+        ))}
       </div>
     </section>
   );

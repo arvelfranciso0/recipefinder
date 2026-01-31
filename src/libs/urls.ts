@@ -1,4 +1,4 @@
-import { sideNavbarInterface, UrlInterface } from "@/interface/urlInterface";
+import { sideNavbarInterface, UrlInterface } from "@/interface/url-interface";
 import { Bell, Settings, Sliders, User } from "lucide-react";
 
 export const Urls: UrlInterface[] = [
