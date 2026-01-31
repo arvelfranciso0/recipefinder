@@ -1,16 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { Eye, Lock, LucideIcon, Mail, User } from "lucide-react";
+import { Eye, Lock, Mail, User } from "lucide-react";
 import { ChefHat } from "@/components/icons/chef-hat";
-import SocialButton from "../_components/social-button";
+
 import Button from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputField } from "@/components/ui/input";
 import { useState } from "react";
+import useForm from "@/hooks/useForm";
+import { signupFormDefaultValue, signUpSchema } from "@/schemas/auth";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 export default function SignUpPage() {
   const [check, setCheck] = useState(false);
+  const { values, handleSubmit, handleChange, errors } = useForm(
+    signupFormDefaultValue,
+    signUpSchema,
+  );
+
+  const handleSignup = async () => {
+    await axios
+      .post("/api/auth/sign-up", values)
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+      })
+      .catch((error: AxiosError) => {
+        console.log("Internal server error.");
+      });
+  };
   return (
     <div className="min-h-screen flex">
       {/* --- Left Hero Section --- */}
@@ -82,10 +100,10 @@ export default function SignUpPage() {
           </header>
 
           {/* Social Sign Up */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
+          {/* <div className="grid grid-cols-2 gap-4 mb-8">
             <SocialButton provider={"Google"} />
             <SocialButton provider={"Facebook"} />
-          </div>
+          </div> */}
 
           <div className="relative flex items-center mb-8">
             <div className="grow border-t border-gray-100"></div>
@@ -95,7 +113,7 @@ export default function SignUpPage() {
             <div className="grow border-t border-gray-100"></div>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={handleSubmit(handleSignup)}>
             <div>
               <label
                 className="block text-sm font-bold text-foreground mb-2"
@@ -105,11 +123,19 @@ export default function SignUpPage() {
               </label>
               <InputField
                 id="fullname"
+                name="fullname"
                 type="text"
                 placeholder="Chef Gusteau"
                 icon={User}
                 className="w-full"
+                value={values.fullname}
+                onChange={handleChange}
               />
+              {errors.fullname && (
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.fullname}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -120,11 +146,17 @@ export default function SignUpPage() {
               </label>
               <InputField
                 id="email"
+                name="email"
                 type="email"
                 placeholder="gusteau@recipefinder.com"
                 icon={Mail}
                 className="w-full"
+                value={values.email}
+                onChange={handleChange}
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-3 pl-2">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -141,9 +173,12 @@ export default function SignUpPage() {
                 <InputField
                   id="password"
                   type="password"
+                  name="password"
                   placeholder="••••••••"
                   icon={Lock}
                   className="w-full"
+                  value={values.password}
+                  onChange={handleChange}
                 />
 
                 <button
@@ -153,6 +188,11 @@ export default function SignUpPage() {
                   <Eye />
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.password}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -182,7 +222,10 @@ export default function SignUpPage() {
               </Checkbox>
             </div>
 
-            <Button className=" w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4">
+            <Button
+              type="submit"
+              className=" w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4"
+            >
               Join the Kitchen
             </Button>
           </form>

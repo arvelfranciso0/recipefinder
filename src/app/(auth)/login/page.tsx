@@ -10,6 +10,9 @@ import { useLocalStorage } from "@/hooks/use-local-storage";
 import { InputField } from "@/components/ui/input";
 import { Eye, Lock } from "lucide-react";
 import { useState } from "react";
+import useForm from "@/hooks/useForm";
+import { loginFormDefaultValue, loginSchema } from "@/schemas/auth";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,6 +20,22 @@ export default function LoginPage() {
 
   // TODO: Convert to a proper authentication
   const [isAuth, setIsAuth] = useLocalStorage<boolean>("isAuth", false);
+
+  const { values, handleSubmit, handleChange, errors } = useForm(
+    loginFormDefaultValue,
+    loginSchema,
+  );
+
+  const handleLogin = async () => {
+    await axios
+      .post("/api/auth/login", values)
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+      })
+      .catch((error: AxiosError) => {
+        console.log("Internal server error.");
+      });
+  };
   return (
     <div className="  min-h-screen flex">
       {/* Left Side: Hero Image (Hidden on Mobile) */}
@@ -65,7 +84,7 @@ export default function LoginPage() {
             <p className="text-muted">Please enter your details to sign in.</p>
           </div>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
             <div>
               <label
                 className="block text-sm font-bold text-foreground mb-2"
@@ -79,6 +98,9 @@ export default function LoginPage() {
                 placeholder="name@example.com"
                 required
                 className="w-full"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
               />
             </div>
 
@@ -103,6 +125,9 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 icon={Lock}
                 className="w-full"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
               />
 
               <button
@@ -129,10 +154,11 @@ export default function LoginPage() {
             </div>
 
             <Button
-              onClick={() => {
-                setIsAuth(true);
-                router.push("/recipe");
-              }}
+              // onClick={() => {
+              //   setIsAuth(true);
+              //   router.push("/recipe");
+              // }}
+              type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98]"
             >
               Sign In
