@@ -1,0 +1,1 @@
+ALTER TABLE `user_verifications` ADD `salt` text;

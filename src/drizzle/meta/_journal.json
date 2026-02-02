@@ -1,19 +1,26 @@
 {
   "version": "7",
-  "dialect": "postgresql",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1769330841415,
-      "tag": "0000_initial-migration",
+      "version": "5",
+      "when": 1769990122315,
+      "tag": "0000_absent_polaris",
       "breakpoints": true
     },
     {
       "idx": 1,
-      "version": "7",
-      "when": 1769331193618,
-      "tag": "0001_enum-migration",
+      "version": "5",
+      "when": 1769990500275,
+      "tag": "0001_next_violations",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1769990667297,
+      "tag": "0002_ambiguous_inertia",
       "breakpoints": true
     }
   ]

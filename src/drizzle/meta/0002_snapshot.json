@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "7e6bbe88-ab73-44b9-96a3-af848d7c0aa2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "9e00529d-01b4-4a30-965b-30f5753adec4",
+  "prevId": "69a8e4b9-d8eb-4c6c-a940-c585b1cfa6b4",
   "tables": {
     "access_token": {
       "name": "access_token",
@@ -305,13 +305,12 @@
           "notNull": true,
           "autoincrement": false
         },
-        "verification_timestamp": {
-          "name": "verification_timestamp",
-          "type": "timestamp",
+        "salt": {
+          "name": "salt",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "notNull": false,
+          "autoincrement": false
         },
         "verification_expires_at": {
           "name": "verification_expires_at",
