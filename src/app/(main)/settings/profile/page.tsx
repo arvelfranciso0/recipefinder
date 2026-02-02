@@ -3,8 +3,20 @@
 import Button from "@/components/ui/button";
 import { ProfileForm } from "./_components/profile-form";
 import { ThemeSelector } from "@/components/shared/themeSelector";
+import { useEffect } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 export default function ProfilePage() {
+  useEffect(() => {
+    axios
+      .get("/api/user/1")
+      .then((res: AxiosResponse) => {
+        console.log("Response :", res);
+      })
+      .catch((error: AxiosError) => {
+        console.log("Error :", error?.message);
+      });
+  }, []);
   return (
     <section className="flex-1 space-y-8">
       <div>
