@@ -1,61 +1,97 @@
+import { email } from "@/validator/validator";
+import { sql } from "drizzle-orm";
 import {
   date,
-  pgTable,
+  int,
+  mysqlEnum,
+  mysqlTable,
   text,
   timestamp,
-  pgEnum,
-  uuid,
-} from "drizzle-orm/pg-core";
-export const UserRole = pgEnum("user_role", ["USER", "ADMIN", "MODERATOR"]);
-export const ThemeMode = pgEnum("theme_mode", ["DARK", "LIGHT"]);
+  varchar,
+} from "drizzle-orm/mysql-core";
 
-export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  email: text("email").notNull(),
-  fullName: text("full_name").notNull(),
-  role: UserRole("role").notNull(),
-  birthdate: date("birthdate"),
+export const UserType = ["USER", "ADMIN", "MODERATOR"] as const;
+export const VerificationType = ["EMAIL", "FORGOT_PASSWORD"] as const;
+export const users = mysqlTable("users", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 100 }).notNull().unique(),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  password: text("password").notNull(),
+  role: mysqlEnum("role", UserType).notNull(),
+  birthdate: varchar("birthdate", { length: 255 }),
   salt: text("salt"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => new Date()),
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
 });
 
-export const favorites = pgTable("favorites", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  userId: uuid("user_id")
+export const favorites = mysqlTable("favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id")
     .notNull()
     .references(() => users.id),
   mealId: text("meal_id"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => new Date()),
-});
-
-export const settings = pgTable("settings", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id)
-    .unique(),
-  theme: ThemeMode("theme").notNull().default("LIGHT"),
-  dietaryPreferences: text("dietary_preferences"),
-  measurementUnit: text("measurement_unit"),
-  notification: text("notification"),
-});
-
-export const userVerifications = pgTable("user_verifications", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id)
-    .unique(),
-  verificationCode: text("verification_code").notNull(),
-  verificationTimestamp: timestamp("verification_timestamp")
-    .defaultNow()
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
+});
+
+export const settings = mysqlTable("settings", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id")
+    .notNull()
+    .references(() => users.id)
+    .unique(),
+  theme: mysqlEnum("theme", ["DARK", "LIGHT"]).notNull().default("LIGHT"),
+  dietaryPreferences: varchar("dietary_preferences", { length: 100 }),
+  measurementUnit: varchar("measurement_unit", { length: 10 }),
+  notification: varchar("notification", { length: 10 }),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
+});
+
+export const userVerifications = mysqlTable("user_verifications", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 100 }).notNull().unique(),
+  hashVerificationCode: varchar("hash_verification_code", {
+    length: 100,
+  }).notNull(),
+  salt: text("salt"),
   verificationExpiresAt: timestamp("verification_expires_at"),
-  type: text("type").default("email").notNull(),
+  type: mysqlEnum("type", VerificationType).notNull(),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
+});
+
+export const accessToken = mysqlTable("access_token", {
+  id: int("id").autoincrement().primaryKey(),
+  token: varchar("token", { length: 100 }).notNull().unique(),
+  tokenType: mysqlEnum("token_type", UserType).notNull(),
+  name: varchar("name", { length: 50 }),
+  tokenableId: int("tokenable_id")
+    .notNull()
+    .references(() => users.id)
+    .unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  lastUsedAt: timestamp("last_used_at"),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .onUpdateNow(),
 });
