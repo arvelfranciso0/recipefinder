@@ -1,0 +1,29 @@
+import { User } from "@/interface/user-inteface";
+import { generateCryptoHash } from "@/libs/utils";
+import { findHashTokenByToken } from "@/repository/access_token";
+import { findByUserId } from "@/repository/user";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(req: NextRequest) {
+  const token = req.cookies.get("session")?.value;
+
+  if (!token)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
+  const tokenHash = await generateCryptoHash(token);
+
+  const access_token = await findHashTokenByToken(tokenHash);
+  if (!access_token || access_token.expiresAt < new Date())
+    return NextResponse.json({ message: "Session expired" }, { status: 401 });
+
+  const user = await findByUserId(access_token.tokenableId);
+
+  const userData: User = {
+    id: user.id,
+    role: user.role,
+    email: user.email,
+    fullName: user.fullName,
+  };
+
+  return NextResponse.json({ user: userData }, { status: 200 });
+}

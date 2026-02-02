@@ -1,6 +1,7 @@
-import { ValidationResult } from "@/interface/form-interface";
+import { verifyPasswordHashInterface } from "@/interface/data-interface";
 import { Schema } from "@/types/form-types";
 import { Url } from "next/dist/shared/lib/router/router";
+import crypto from "crypto";
 
 export const getActiveClass = (pathname: string, path: Url): boolean => {
   return pathname === path;
@@ -14,15 +15,21 @@ export function capitalizeFirstLetter(str: string): string {
 export function validateSchema<T extends Record<string, any>>(
   schema: Schema<T>,
   body: any,
-): ValidationResult<T> {
-  const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
+):
+  | { data: T; valid: true }
+  | { errors: Record<keyof T, string>; valid: false } {
+  const errors: Partial<Record<keyof T, string>> = {};
   const data: Partial<T> = {};
 
   for (const key in schema) {
     const validator = schema[key];
     const value = body[key];
 
-    console.log(`Validator ${validator} value ${value}`);
+    // Missing required field
+    if (value === undefined) {
+      errors[key as keyof T] = "Required field is missing";
+      continue;
+    }
 
     const error = validator(value);
     if (error) {
@@ -34,5 +41,44 @@ export function validateSchema<T extends Record<string, any>>(
 
   const valid = Object.keys(errors).length === 0;
 
-  return valid ? { data: data as T, valid } : { errors, valid };
+  if (valid) {
+    // Now TS knows data is fully typed
+    return { data: data as T, valid: true };
+  } else {
+    return { errors: errors as Record<keyof T, string>, valid: false };
+  }
+}
+
+export async function verifyPasswordHash(
+  data: verifyPasswordHashInterface,
+): Promise<boolean> {
+  const hash = await generateHashPassword(data.inputPassword, data.salt);
+
+  return crypto.timingSafeEqual(
+    Buffer.from(hash, "hex"),
+    Buffer.from(data.hashPassword, "hex"),
+  );
+}
+
+export async function generateHashPassword(
+  password: string,
+  salt: string,
+): Promise<string> {
+  return crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+}
+
+export async function generateSessionToken(): Promise<string> {
+  return crypto.randomBytes(32).toString("hex");
+}
+
+export async function generateCryptoHash(token: string): Promise<string> {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
+
+export async function genereteSixRandomCode(): Promise<string> {
+  return crypto.randomInt(100000, 1000000).toString();
+}
+
+export async function generateSalt(): Promise<string> {
+  return crypto.randomBytes(16).toString("hex");
 }

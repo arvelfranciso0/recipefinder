@@ -1,3 +1,4 @@
+import { UserRoleType } from "@/types/role-type";
 import { LucideIcon } from "lucide-react";
 
 export interface DietsInterface {
@@ -13,4 +14,18 @@ export interface CategoriesInteface {
   bgClass: string;
   colorClass: string;
   icon: LucideIcon;
+}
+
+export interface verifyPasswordHashInterface {
+  inputPassword: string;
+  salt: string;
+  hashPassword: string;
+}
+
+export interface accessTokenInterface {
+  token: string;
+  tokenType: UserRoleType;
+  name: string;
+  tokenableId: number;
+  expiresAt: Date;
 }

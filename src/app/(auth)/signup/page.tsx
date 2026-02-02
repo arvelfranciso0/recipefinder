@@ -7,13 +7,17 @@ import { ChefHat } from "@/components/icons/chef-hat";
 import Button from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputField } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
 import { signupFormDefaultValue, signUpSchema } from "@/schemas/auth";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { AuthProvider, useAuth } from "@/providers/auth-providers";
+import { useRouter } from "next/navigation";
 
-export default function SignUpPage() {
+export function SignUpForm() {
   const [check, setCheck] = useState(false);
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const { values, handleSubmit, handleChange, errors } = useForm(
     signupFormDefaultValue,
     signUpSchema,
@@ -29,6 +33,12 @@ export default function SignUpPage() {
         console.log("Internal server error.");
       });
   };
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push("/"); // only redirect once
+    }
+  }, [user, loading, router]);
   return (
     <div className="min-h-screen flex">
       {/* --- Left Hero Section --- */}
@@ -123,17 +133,17 @@ export default function SignUpPage() {
               </label>
               <InputField
                 id="fullname"
-                name="fullname"
+                name="fullName"
                 type="text"
                 placeholder="Chef Gusteau"
                 icon={User}
                 className="w-full"
-                value={values.fullname}
+                value={values.fullName}
                 onChange={handleChange}
               />
-              {errors.fullname && (
+              {errors.fullName && (
                 <p className="text-red-500 text-xs mt-3 pl-2">
-                  {errors.fullname}
+                  {errors.fullName}
                 </p>
               )}
             </div>
@@ -257,5 +267,13 @@ export default function SignUpPage() {
         </footer>
       </section>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <AuthProvider>
+      <SignUpForm />
+    </AuthProvider>
   );
 }

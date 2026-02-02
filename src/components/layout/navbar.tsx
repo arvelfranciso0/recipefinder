@@ -11,7 +11,7 @@ import { getActiveClass } from "@/libs/utils";
 import Button from "../ui/button";
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const pathname = usePathname();
 
   return (
@@ -45,7 +45,7 @@ export default function Navbar() {
               Home
             </Link>
 
-            {isAuthenticated && (
+            {user && (
               <>
                 <Link
                   href="/recipe"
@@ -65,7 +65,7 @@ export default function Navbar() {
 
           {/* Conditional Auth UI */}
           <div className="flex items-center gap-3 border-l  pl-6">
-            {!isAuthenticated ? (
+            {!user ? (
               /* --- GUEST VIEW --- */
               <div className="flex items-center gap-2">
                 <Button variant="ghost">
