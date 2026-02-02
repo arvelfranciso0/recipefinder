@@ -1,16 +1,27 @@
 "use client";
 
-import { useLocalStorage } from "@/hooks/use-local-storage";
 import { sideNavbar } from "@/libs/urls";
 import { getActiveClass } from "@/libs/utils";
+import { useAuth } from "@/providers/auth-providers";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 export function SettingsSidebar() {
   const pathname = usePathname();
-  const router = useRouter();
-  const [isAuth, setIsAuth] = useLocalStorage<boolean>("isAuth", false);
+  const { refreshUser } = useAuth();
+
+  const handleLogout = () => {
+    axios
+      .get("/api/auth/logout", { withCredentials: true })
+      .then((res: AxiosResponse) => {
+        refreshUser();
+      })
+      .catch((error: AxiosError) => {
+        console.log("Error");
+      });
+  };
   return (
     <aside className="w-full lg:w-64 space-y-2">
       <nav className="bg-white dark:bg-white/5 rounded-2xl p-2 soft-shadow border border-gray-100 dark:border-white/10">
@@ -33,10 +44,7 @@ export function SettingsSidebar() {
         })}
         <div className="my-2 border-t border-gray-50 dark:border-white/5" />
         <button
-          onClick={() => {
-            setIsAuth(false);
-            router.push("/login");
-          }}
+          onClick={handleLogout}
           className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-semibold"
         >
           <LogOut className="w-5 h-5" />

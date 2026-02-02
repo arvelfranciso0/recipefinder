@@ -9,17 +9,16 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { InputField } from "@/components/ui/input";
 import { Eye, Lock } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
 import { loginFormDefaultValue, loginSchema } from "@/schemas/auth";
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { AuthProvider, useAuth } from "@/providers/auth-providers";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const [check, setCheck] = useState(false);
-
-  // TODO: Convert to a proper authentication
-  const [isAuth, setIsAuth] = useLocalStorage<boolean>("isAuth", false);
+  const { user, loading, refreshUser } = useAuth();
 
   const { values, handleSubmit, handleChange, errors } = useForm(
     loginFormDefaultValue,
@@ -30,12 +29,19 @@ export default function LoginPage() {
     await axios
       .post("/api/auth/login", values)
       .then((res: AxiosResponse) => {
+        refreshUser();
         console.log(res.data);
       })
       .catch((error: AxiosError) => {
         console.log("Internal server error.");
       });
   };
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push("/"); // only redirect once
+    }
+  }, [user, loading, router]);
   return (
     <div className="  min-h-screen flex">
       {/* Left Side: Hero Image (Hidden on Mobile) */}
@@ -166,7 +172,7 @@ export default function LoginPage() {
           </form>
 
           {/* Divider */}
-          <div className="relative my-10">
+          {/* <div className="relative my-10">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-100"></div>
             </div>
@@ -175,13 +181,13 @@ export default function LoginPage() {
                 Or continue with
               </span>
             </div>
-          </div>
+          </div> */}
 
           {/* Social Buttons */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-2 gap-4">
             <SocialButton provider="Google" />
             <SocialButton provider="Facebook" />
-          </div>
+          </div> */}
 
           <p className="mt-10 text-center text-sm text-muted font-medium">
             Don&apos;t have an account?
@@ -195,5 +201,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <AuthProvider>
+      <LoginForm />
+    </AuthProvider>
   );
 }

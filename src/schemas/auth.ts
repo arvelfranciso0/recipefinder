@@ -8,13 +8,13 @@ export const loginSchema: Schema<LoginForm> = {
 };
 
 export const signUpSchema: Schema<SignupForm> = {
-  fullname: (val: string) => required(val),
+  fullName: (val: string) => required(val),
   email: (val: string) => required(val) || email(val),
   password: (val: string) => required(val) || validatePassword(val),
 };
 
 export const signupFormDefaultValue: SignupForm = {
-  fullname: "",
+  fullName: "",
   email: "",
   password: "",
 };
