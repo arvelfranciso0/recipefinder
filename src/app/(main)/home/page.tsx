@@ -1,9 +1,8 @@
 "use client";
 
-import Categories from "./_components/categories";
-import FeaturedMeals from "./_components/feature-meals";
-import Hero from "./_components/hero";
-import Newsletter from "./_components/news-letter";
+import Categories from "../_components/categories";
+import FeaturedMeals from "../_components/feature-meals";
+import Hero from "../_components/hero";
 
 export default function Home() {
   return (

@@ -1,23 +1,9 @@
 "use client";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
-import { DashboardSkeleton } from "@/components/shared/dashboardSkeleton";
 import { AuthProvider, useAuth } from "@/providers/auth-providers";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 function ProtectedWrapper({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/login"); // redirect if unauthorized
-    }
-  }, [loading, user, router]);
-
-  if (loading || !user) return <DashboardSkeleton />;
-
   return (
     <>
       <Navbar />

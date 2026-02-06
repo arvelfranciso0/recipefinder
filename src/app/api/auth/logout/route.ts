@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("session")?.value;
+    const token = req.cookies.get("auth_session")?.value;
 
     if (!token)
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     const res = NextResponse.json({ message: "Logout successful" });
 
     // clear the cookie
-    res.cookies.set("session", "", {
+    res.cookies.set("auth_session", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",

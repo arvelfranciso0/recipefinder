@@ -10,13 +10,15 @@ import { usePathname, useRouter } from "next/navigation";
 
 export function SettingsSidebar() {
   const pathname = usePathname();
-  const { refreshUser } = useAuth();
+  const router = useRouter();
+  // const { refreshUser } = useAuth();
 
   const handleLogout = () => {
     axios
       .get("/api/auth/logout", { withCredentials: true })
       .then((res: AxiosResponse) => {
-        refreshUser();
+        // refreshUser();
+        router.push("/login");
       })
       .catch((error: AxiosError) => {
         console.log("Error");

@@ -6,42 +6,34 @@ import SocialButton from "../_components/social-button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Button from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { InputField } from "@/components/ui/input";
 import { Eye, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
 import useForm from "@/hooks/useForm";
-import { loginFormDefaultValue, loginSchema } from "@/schemas/auth";
+// import { loginFormDefaultValue, loginSchema } from "@/schemas/auth";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { AuthProvider, useAuth } from "@/providers/auth-providers";
 
 function LoginForm() {
   const router = useRouter();
   const [check, setCheck] = useState(false);
-  const { user, loading, refreshUser } = useAuth();
 
-  const { values, handleSubmit, handleChange, errors } = useForm(
-    loginFormDefaultValue,
-    loginSchema,
-  );
+  // const { values, handleSubmit, handleChange } = useForm(
+  //   loginFormDefaultValue,
+  //   loginSchema,
+  // );
 
-  const handleLogin = async () => {
-    await axios
-      .post("/api/auth/login", values)
-      .then((res: AxiosResponse) => {
-        refreshUser();
-        console.log(res.data);
-      })
-      .catch((error: AxiosError) => {
-        console.log("Internal server error.");
-      });
-  };
+  // const handleLogin = async () => {
+  //   await axios
+  //     .post("/api/auth/login", values)
+  //     .then((res: AxiosResponse) => {
+  //       router.push("/home");
+  //     })
+  //     .catch((error: AxiosError) => {
+  //       console.log("Internal server error.");
+  //     });
+  // };
 
-  useEffect(() => {
-    if (!loading && user) {
-      router.push("/"); // only redirect once
-    }
-  }, [user, loading, router]);
   return (
     <div className="  min-h-screen flex">
       {/* Left Side: Hero Image (Hidden on Mobile) */}
@@ -90,7 +82,7 @@ function LoginForm() {
             <p className="text-muted">Please enter your details to sign in.</p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
+          <form className="space-y-6">
             <div>
               <label
                 className="block text-sm font-bold text-foreground mb-2"
@@ -105,8 +97,8 @@ function LoginForm() {
                 required
                 className="w-full"
                 name="email"
-                value={values.email}
-                onChange={handleChange}
+                // value={values.email}
+                // onChange={handleChange}
               />
             </div>
 
@@ -132,8 +124,8 @@ function LoginForm() {
                 icon={Lock}
                 className="w-full"
                 name="password"
-                value={values.password}
-                onChange={handleChange}
+                // value={values.password}
+                // onChange={handleChange}
               />
 
               <button
@@ -206,8 +198,8 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <AuthProvider>
-      <LoginForm />
-    </AuthProvider>
+    // <AuthProvider>
+    <LoginForm />
+    // </AuthProvider>
   );
 }
