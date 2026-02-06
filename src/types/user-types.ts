@@ -1,4 +1,5 @@
 import { UserRoleType } from "@/types/role-type";
+import { Settings } from "./setting-type";
 
 export type User = {
   id?: number;
@@ -13,3 +14,5 @@ export type UserDetails = User & {
   birthdate?: string;
   salt: string;
 };
+
+export type UserSettings = User & Pick<Settings, "theme">;

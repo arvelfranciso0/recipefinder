@@ -2,6 +2,7 @@
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { AuthProvider, useAuth } from "@/providers/auth-providers";
+import { ThemeProvider } from "next-themes";
 
 function ProtectedWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -20,10 +21,10 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <AuthProvider>
         <ProtectedWrapper>{children}</ProtectedWrapper>
       </AuthProvider>
-    </>
+    </ThemeProvider>
   );
 }

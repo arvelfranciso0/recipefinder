@@ -23,13 +23,11 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" className={`${jakarta.variable}`}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ToastProvider>
-            <div className="antialiased transition-colors duration-300">
-              {children}
-            </div>
-          </ToastProvider>
-        </ThemeProvider>
+        <ToastProvider>
+          <div className="antialiased transition-colors duration-300">
+            {children}
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

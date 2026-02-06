@@ -55,7 +55,9 @@ export const settings = mysqlTable("settings", {
     .notNull()
     .references(() => users.id)
     .unique(),
-  theme: mysqlEnum("theme", ["DARK", "LIGHT"]).notNull().default("LIGHT"),
+  theme: mysqlEnum("theme", ["DARK", "LIGHT", "SYSTEM"])
+    .notNull()
+    .default("LIGHT"),
   dietaryPreferences: varchar("dietary_preferences", { length: 100 }),
   measurementUnit: varchar("measurement_unit", { length: 10 }),
   notification: varchar("notification", { length: 10 }),
