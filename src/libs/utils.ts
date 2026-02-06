@@ -71,6 +71,10 @@ export async function generateSessionToken(): Promise<string> {
   return crypto.randomBytes(32).toString("hex");
 }
 
+export async function generateIdToken(): Promise<string> {
+  return crypto.randomUUID().replace(/-/g, "");
+}
+
 export async function generateCryptoHash(token: string): Promise<string> {
   return crypto.createHash("sha256").update(token).digest("hex");
 }
@@ -81,4 +85,27 @@ export async function genereteSixRandomCode(): Promise<string> {
 
 export async function generateSalt(): Promise<string> {
   return crypto.randomBytes(16).toString("hex");
+}
+
+export async function generateHash(
+  prefix: string,
+  token: string,
+  salt: string,
+): Promise<string> {
+  return crypto
+    .pbkdf2Sync(`${prefix} ${token}`, salt, 1000, 64, "sha256")
+    .toString("hex");
+}
+
+export async function verifyHash(
+  prefix: string,
+  original: string,
+  originalHash: string,
+  salt: string,
+): Promise<boolean> {
+  const hash = await generateHash(prefix, original, salt);
+  return crypto.timingSafeEqual(
+    Buffer.from(hash, "hex"),
+    Buffer.from(originalHash, "hex"),
+  );
 }

@@ -1,24 +1,27 @@
-import { LoginForm, SignupForm } from "@/interface/form-interface";
-import { Schema } from "@/types/form-types";
-import { email, required, validatePassword } from "@/validator/validator";
+import z from "zod";
 
-export const loginSchema: Schema<LoginForm> = {
-  email: (val: string) => required(val) || email(val),
-  password: (val: string) => required(val) || validatePassword(val),
-};
+export const SingupSchema = z
+  .object({
+    email: z.email(),
+    fullName: z.string(),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" })
+      .regex(/[A-Z]/, {
+        message: "Password must contain at least one uppercase letter",
+      })
+      .regex(/[a-z]/, {
+        message: "Password must contain at least one lowercase letter",
+      })
+      .regex(/[0-9]/, { message: "Password must contain at least one number" })
+      .regex(/[^A-Za-z0-9]/, {
+        message: "Password must contain at least one special character",
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-export const signUpSchema: Schema<SignupForm> = {
-  fullName: (val: string) => required(val),
-  email: (val: string) => required(val) || email(val),
-  password: (val: string) => required(val) || validatePassword(val),
-};
-
-export const signupFormDefaultValue: SignupForm = {
-  fullName: "",
-  email: "",
-  password: "",
-};
-export const loginFormDefaultValue: LoginForm = {
-  email: "",
-  password: "",
-};
+export type SingupForm = z.infer<typeof SingupSchema>;

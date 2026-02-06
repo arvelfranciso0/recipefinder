@@ -43,7 +43,6 @@ export function sendEmailVerification(email: EmailVerificationCode) {
                   </td>
                 </tr>
               </table>
-
               <h1 style="margin-top: 15px; font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.025em; margin-bottom: 0;">
                 Recipe<span style="color: #65a338;">Finder</span>
               </h1>
@@ -54,13 +53,13 @@ export function sendEmailVerification(email: EmailVerificationCode) {
             <td align="center" style="padding: 0 40px 20px 40px;">
               <h2 style="font-size: 20px; font-weight: 700; color: #1e293b; margin-bottom: 12px;">Verify your email</h2>
               <p style="font-size: 15px; line-height: 24px; color: #64748b; margin: 0;">
-                Enter the following 6-digit code in the app to complete your verification and start cooking!
+                Use the code below on the verification screen to complete your registration and start exploring recipes.
               </p>
             </td>
           </tr>
 
           <tr>
-            <td align="center" style="padding: 0 40px 40px 40px;">
+            <td align="center" style="padding: 0 40px 10px 40px;">
               <table border="0" cellpadding="0" cellspacing="0" align="center" style="margin: 0 auto;">
                 <tr>
                   <td align="center" bgcolor="#f1f5f9" style="padding: 16px 32px; border-radius: 16px; border: 2px dashed #e2e8f0;">
@@ -70,12 +69,32 @@ export function sendEmailVerification(email: EmailVerificationCode) {
                   </td>
                 </tr>
               </table>
-              <p style="margin-top: 25px; font-size: 12px; color: #94a3b8; line-height: 18px;">
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding: 20px 40px 40px 40px;">
+              <p style="font-size: 14px; color: #64748b; margin-bottom: 20px; line-height: 21px;">
+                If you closed the verification page, please click the button below to return and enter your code:
+              </p>
+              
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <a href="http://localhost:3000/verify/${email.idToken}" target="_blank" style="display: inline-block; background-color: #65a338; color: #ffffff; font-size: 16px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(101, 163, 56, 0.2);">
+                      Return to Verification
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin-top: 30px; font-size: 12px; color: #94a3b8; line-height: 18px;">
                 This code will expire in 10 minutes.<br>
                 If you didn't request this, you can safely ignore this email.
               </p>
             </td>
           </tr>
+
         </table>
       </td>
     </tr>
