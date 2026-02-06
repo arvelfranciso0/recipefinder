@@ -9,9 +9,10 @@ import { InputField } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { signUpActions } from "./action";
 import { useForm } from "react-hook-form";
-import { SingupForm, SingupSchema } from "@/schemas/auth";
+import { SingupSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/context/toastContext";
+import { SingupForm } from "@/types/auth-types";
 
 export function SignUpForm() {
   const [check, setCheck] = useState(false);

@@ -5,34 +5,48 @@ import { ChefHat } from "@/components/icons/chef-hat";
 import SocialButton from "../_components/social-button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Button from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { InputField } from "@/components/ui/input";
-import { Eye, Lock } from "lucide-react";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
-import useForm from "@/hooks/useForm";
-// import { loginFormDefaultValue, loginSchema } from "@/schemas/auth";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import { LoginForm } from "@/types/auth-types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema } from "@/schemas/auth";
+import { loginActions } from "./action";
+import { useToast } from "@/context/toastContext";
 
-function LoginForm() {
-  const router = useRouter();
+export default function LoginPage() {
   const [check, setCheck] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful, isDirty },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(LoginSchema),
+  });
 
-  // const { values, handleSubmit, handleChange } = useForm(
-  //   loginFormDefaultValue,
-  //   loginSchema,
-  // );
+  const onSubmit = async (data: LoginForm) => {
+    const result = await loginActions(data);
+    toast(result.message, "error");
+  };
 
-  // const handleLogin = async () => {
-  //   await axios
-  //     .post("/api/auth/login", values)
-  //     .then((res: AxiosResponse) => {
-  //       router.push("/home");
-  //     })
-  //     .catch((error: AxiosError) => {
-  //       console.log("Internal server error.");
-  //     });
-  // };
+  useEffect(() => {
+    // Only warn if the form is dirty OR currently submitting
+    if (!isDirty && !isSubmitting) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty, isSubmitting]);
 
   return (
     <div className="  min-h-screen flex">
@@ -82,7 +96,7 @@ function LoginForm() {
             <p className="text-muted">Please enter your details to sign in.</p>
           </div>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label
                 className="block text-sm font-bold text-foreground mb-2"
@@ -96,9 +110,7 @@ function LoginForm() {
                 placeholder="name@example.com"
                 required
                 className="w-full"
-                name="email"
-                // value={values.email}
-                // onChange={handleChange}
+                {...register("email")}
               />
             </div>
 
@@ -119,20 +131,22 @@ function LoginForm() {
             <div className="relative">
               <InputField
                 id="password"
-                type="password"
+                {...register("password")}
                 placeholder="••••••••"
                 icon={Lock}
                 className="w-full"
                 name="password"
                 // value={values.password}
                 // onChange={handleChange}
+                type={showPassword ? "text" : "password"}
               />
 
               <button
                 type="button"
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
               >
-                <Eye />
+                {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
 
@@ -152,14 +166,11 @@ function LoginForm() {
             </div>
 
             <Button
-              // onClick={() => {
-              //   setIsAuth(true);
-              //   router.push("/recipe");
-              // }}
+              disabled={isSubmitting}
               type="submit"
               className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98]"
             >
-              Sign In
+              {isSubmitting ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
@@ -193,13 +204,5 @@ function LoginForm() {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function LoginPage() {
-  return (
-    // <AuthProvider>
-    <LoginForm />
-    // </AuthProvider>
   );
 }

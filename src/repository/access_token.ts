@@ -4,7 +4,7 @@ import { accessTokenInterface } from "@/interface/data-interface";
 import { and, eq, gt, isNull } from "drizzle-orm";
 
 export async function saveAccessToken(data: accessTokenInterface) {
-  await db.insert(accessToken).values(data);
+  await db.insert(accessToken).values(data).$returningId();
 }
 
 export async function findHashTokenByToken(hashSessionToken: string) {

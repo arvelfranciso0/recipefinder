@@ -1,5 +1,5 @@
 "use server";
-import { SingupForm, SingupSchema } from "@/schemas/auth";
+import { SingupSchema } from "@/schemas/auth";
 import { db } from "@/db";
 import { users, userVerifications } from "@/db/schema";
 import { EmailVerificationCode } from "@/types/email-types";
@@ -15,6 +15,7 @@ import {
 import { EnumRole } from "@/enums/role-enum";
 import { redirect } from "next/navigation";
 import { handleError } from "@/error/errors";
+import { SingupForm } from "@/types/auth-types";
 
 export async function signUpActions(formData: SingupForm) {
   let idToken = "";
