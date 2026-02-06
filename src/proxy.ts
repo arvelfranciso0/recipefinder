@@ -5,33 +5,41 @@ import { findHashTokenByToken } from "./repository/access_token";
 
 export async function proxy(req: NextRequest) {
   // 1Get the session token from HTTP-only cookie
-  const token = req.cookies.get("session")?.value;
+  const { pathname } = req.nextUrl;
+  const token = req.cookies.has("auth_session");
 
-  if (!token) {
-    // No token → unauthorized
-    return NextResponse.redirect(new URL("/login", req.url));
+  if (
+    pathname.startsWith("/settings") ||
+    pathname.startsWith("/favorites") ||
+    pathname.startsWith("/recipe") ||
+    pathname.startsWith("/home")
+  ) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  }
+  if (
+    (token && pathname.startsWith("/login")) ||
+    (token && pathname.startsWith("/signup"))
+  ) {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
-  //Hash the token (matches DB storage)
-  const tokenHash = await generateCryptoHash(token);
-
-  // Query the DB for a valid session
-  const session = await findHashTokenByToken(tokenHash);
-
-  if (!session) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  // Check expiration
-  if (session.expiresAt < new Date()) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  //Session valid → continue request
+  // Allow the request to proceed to the next handler
   return NextResponse.next();
 }
 
 // Apply middleware to protected routes
 export const config = {
-  matcher: ["/api/user/:path*"],
+  matcher: [
+    "/api/user/:path*",
+    "/settings/:path*",
+    "/home/:path*",
+    "/favorites/:path*",
+    "/recipe/:path*",
+    "/login",
+    "/signup",
+    "/auth/logout/:path*",
+    "/api/me/:path*",
+  ],
 };

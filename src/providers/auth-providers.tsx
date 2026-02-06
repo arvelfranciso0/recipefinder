@@ -1,6 +1,5 @@
 "use client";
-
-import { User } from "@/interface/user-inteface";
+import { User } from "@/types/user-types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   createContext,

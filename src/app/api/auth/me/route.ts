@@ -1,11 +1,11 @@
-import { User } from "@/interface/user-inteface";
 import { generateCryptoHash } from "@/libs/utils";
 import { findHashTokenByToken } from "@/repository/access_token";
 import { findByUserId } from "@/repository/user";
+import { User } from "@/types/user-types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const token = req.cookies.get("session")?.value;
+  const token = req.cookies.get("auth_session")?.value;
 
   if (!token)
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
     id: user.id,
     role: user.role,
     email: user.email,
+    isEmailVerified: user.isEmailVerified,
     fullName: user.fullName,
   };
 

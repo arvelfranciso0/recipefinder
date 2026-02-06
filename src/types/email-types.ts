@@ -6,6 +6,7 @@ export type Email = {
 
 export type EmailVerificationCode = Email & {
   verificationCode: string;
+  idToken: string;
 };
 
 export type ForgotPasswordCode = Email & {

@@ -3,13 +3,14 @@ import { userVerifications } from "@/db/schema";
 import { VerificationTypeEnum } from "@/enums/verification-type-enum";
 import {
   generateHashPassword,
+  generateIdToken,
   generateSalt,
   genereteSixRandomCode,
 } from "@/libs/utils";
 import {
   sendEmailVerification,
   sendForgotPasswordCode,
-} from "@/services/email";
+} from "@/services/email.server";
 import { EmailVerificationCode, ForgotPasswordCode } from "@/types/email-types";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
   const sixRandomCode = await genereteSixRandomCode();
   const salt = await generateSalt();
   const verificationExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
-
+  const idToken = await generateIdToken();
   try {
     await db.transaction(async (tx) => {
       // Insert verification code
@@ -29,6 +30,8 @@ export async function POST(req: NextRequest) {
         salt,
         verificationExpiresAt,
         type: VerificationTypeEnum.EMAIL,
+        id: idToken,
+        userId: 1,
       });
 
       // Send email
@@ -37,6 +40,7 @@ export async function POST(req: NextRequest) {
         from: "demomailtrap.co",
         verificationCode: sixRandomCode,
         subject: "Email Verification",
+        idToken,
       };
 
       const forgotPassword: ForgotPasswordCode = {
