@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "7e6bbe88-ab73-44b9-96a3-af848d7c0aa2",
+  "id": "6213f708-1922-4663-bfb2-592946edfd94",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "access_token": {
@@ -16,7 +16,7 @@
         },
         "token": {
           "name": "token",
-          "type": "varchar(100)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -72,6 +72,14 @@
           "autoincrement": false,
           "onUpdate": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "null"
         }
       },
       "indexes": {},
@@ -99,12 +107,6 @@
         }
       },
       "uniqueConstraints": {
-        "access_token_token_unique": {
-          "name": "access_token_token_unique",
-          "columns": [
-            "token"
-          ]
-        },
         "access_token_tokenable_id_unique": {
           "name": "access_token_tokenable_id_unique",
           "columns": [
@@ -154,6 +156,14 @@
           "autoincrement": false,
           "onUpdate": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "null"
         }
       },
       "indexes": {},
@@ -245,6 +255,14 @@
           "autoincrement": false,
           "onUpdate": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "null"
         }
       },
       "indexes": {},
@@ -286,10 +304,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "int",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "email": {
           "name": "email",
@@ -298,20 +316,26 @@
           "notNull": true,
           "autoincrement": false
         },
-        "hash_verification_code": {
-          "name": "hash_verification_code",
-          "type": "varchar(100)",
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "verification_timestamp": {
-          "name": "verification_timestamp",
-          "type": "timestamp",
+        "hash_verification_code": {
+          "name": "hash_verification_code",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "autoincrement": false
+        },
+        "salt": {
+          "name": "salt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         },
         "verification_expires_at": {
           "name": "verification_expires_at",
@@ -320,13 +344,19 @@
           "notNull": false,
           "autoincrement": false
         },
+        "last_used_at": {
+          "name": "last_used_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "type": {
           "name": "type",
-          "type": "varchar(255)",
+          "type": "enum('EMAIL','FORGOT_PASSWORD')",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "'email'"
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
@@ -344,23 +374,44 @@
           "autoincrement": false,
           "onUpdate": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "null"
         }
       },
       "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "user_verifications_id": {
-          "name": "user_verifications_id",
+      "foreignKeys": {
+        "user_verifications_user_id_users_id_fk": {
+          "name": "user_verifications_user_id_users_id_fk",
+          "tableFrom": "user_verifications",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_verifications_id_unique": {
+          "name": "user_verifications_id_unique",
           "columns": [
             "id"
           ]
-        }
-      },
-      "uniqueConstraints": {
-        "user_verifications_email_unique": {
-          "name": "user_verifications_email_unique",
+        },
+        "user_verifications_user_id_unique": {
+          "name": "user_verifications_user_id_unique",
           "columns": [
-            "email"
+            "user_id"
           ]
         }
       },
@@ -418,6 +469,14 @@
           "notNull": false,
           "autoincrement": false
         },
+        "is_email_verified": {
+          "name": "is_email_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -434,6 +493,14 @@
           "autoincrement": false,
           "onUpdate": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "null"
         }
       },
       "indexes": {},
