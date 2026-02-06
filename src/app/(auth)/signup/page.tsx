@@ -1,44 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { Eye, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { ChefHat } from "@/components/icons/chef-hat";
-
 import Button from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InputField } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import useForm from "@/hooks/useForm";
-import { signupFormDefaultValue, signUpSchema } from "@/schemas/auth";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { AuthProvider, useAuth } from "@/providers/auth-providers";
-import { useRouter } from "next/navigation";
+import { signUpActions } from "./action";
+import { useForm } from "react-hook-form";
+import { SingupForm, SingupSchema } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/context/toastContext";
 
 export function SignUpForm() {
   const [check, setCheck] = useState(false);
-  const { user, loading } = useAuth();
-  const router = useRouter();
-  const { values, handleSubmit, handleChange, errors } = useForm(
-    signupFormDefaultValue,
-    signUpSchema,
-  );
+  const [showPassword, setShowPassword] = useState(false);
+  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful, isDirty },
+  } = useForm<SingupForm>({
+    resolver: zodResolver(SingupSchema),
+  });
 
-  const handleSignup = async () => {
-    await axios
-      .post("/api/auth/sign-up", values)
-      .then((res: AxiosResponse) => {
-        console.log(res.data);
-      })
-      .catch((error: AxiosError) => {
-        console.log("Internal server error.");
-      });
+  const onSubmit = async (data: SingupForm) => {
+    const result = await signUpActions(data);
+    toast(result.message, "error");
   };
 
   useEffect(() => {
-    if (!loading && user) {
-      router.push("/"); // only redirect once
-    }
-  }, [user, loading, router]);
+    // Only warn if the form is dirty OR currently submitting
+    if (!isDirty && !isSubmitting) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty, isSubmitting]);
   return (
     <div className="min-h-screen flex">
       {/* --- Left Hero Section --- */}
@@ -123,7 +129,7 @@ export function SignUpForm() {
             <div className="grow border-t border-gray-100"></div>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit(handleSignup)}>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label
                 className="block text-sm font-bold text-foreground mb-2"
@@ -133,17 +139,15 @@ export function SignUpForm() {
               </label>
               <InputField
                 id="fullname"
-                name="fullName"
                 type="text"
                 placeholder="Chef Gusteau"
                 icon={User}
                 className="w-full"
-                value={values.fullName}
-                onChange={handleChange}
+                {...register("fullName")}
               />
               {errors.fullName && (
                 <p className="text-red-500 text-xs mt-3 pl-2">
-                  {errors.fullName}
+                  {errors.fullName.message}
                 </p>
               )}
             </div>
@@ -156,16 +160,16 @@ export function SignUpForm() {
               </label>
               <InputField
                 id="email"
-                name="email"
+                {...register("email")}
                 type="email"
                 placeholder="gusteau@recipefinder.com"
                 icon={Mail}
                 className="w-full"
-                value={values.email}
-                onChange={handleChange}
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-3 pl-2">{errors.email}</p>
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -182,25 +186,61 @@ export function SignUpForm() {
                 </span>
                 <InputField
                   id="password"
-                  type="password"
-                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                  minLength={8}
                   placeholder="••••••••"
                   icon={Lock}
                   className="w-full"
-                  value={values.password}
-                  onChange={handleChange}
                 />
 
                 <button
                   type="button"
+                  onClick={() => setShowPassword(!showPassword)}
                   className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                 >
-                  <Eye />
+                  {showPassword ? <EyeOff /> : <Eye />}
                 </button>
               </div>
               {errors.password && (
                 <p className="text-red-500 text-xs mt-3 pl-2">
-                  {errors.password}
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-bold text-foreground mb-2"
+                htmlFor="confirmPassword"
+              >
+                Confirm Password
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted/50">
+                  <Lock />
+                </span>
+                <InputField
+                  id="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  {...register("confirmPassword")}
+                  minLength={8}
+                  placeholder="••••••••"
+                  icon={Lock}
+                  className="w-full"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.confirmPassword.message}
                 </p>
               )}
             </div>
@@ -234,9 +274,10 @@ export function SignUpForm() {
 
             <Button
               type="submit"
+              disabled={isSubmitting}
               className=" w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4"
             >
-              Join the Kitchen
+              {isSubmitting ? "Submitting..." : "Join the Kitchen"}
             </Button>
           </form>
 
@@ -271,9 +312,5 @@ export function SignUpForm() {
 }
 
 export default function SignupPage() {
-  return (
-    <AuthProvider>
-      <SignUpForm />
-    </AuthProvider>
-  );
+  return <SignUpForm />;
 }
