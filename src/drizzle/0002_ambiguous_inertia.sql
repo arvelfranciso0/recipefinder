@@ -1,1 +1,0 @@
-ALTER TABLE `user_verifications` DROP COLUMN `verification_timestamp`;

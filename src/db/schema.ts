@@ -1,6 +1,6 @@
-import { email } from "@/validator/validator";
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   date,
   int,
   mysqlEnum,
@@ -20,12 +20,16 @@ export const users = mysqlTable("users", {
   role: mysqlEnum("role", UserType).notNull(),
   birthdate: varchar("birthdate", { length: 255 }),
   salt: text("salt"),
+  isEmailVerified: boolean("is_email_verified").default(false),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
+  deletedAt: timestamp("deleted_at")
+    .default(sql`null`)
+    .$type<Date | null>(),
 });
 
 export const favorites = mysqlTable("favorites", {
@@ -40,6 +44,9 @@ export const favorites = mysqlTable("favorites", {
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
+  deletedAt: timestamp("deleted_at")
+    .default(sql`null`)
+    .$type<Date | null>(),
 });
 
 export const settings = mysqlTable("settings", {
@@ -58,16 +65,22 @@ export const settings = mysqlTable("settings", {
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
+  deletedAt: timestamp("deleted_at")
+    .default(sql`null`)
+    .$type<Date | null>(),
 });
 
 export const userVerifications = mysqlTable("user_verifications", {
-  id: int("id").autoincrement().primaryKey(),
-  email: varchar("email", { length: 100 }).notNull().unique(),
-  hashVerificationCode: varchar("hash_verification_code", {
-    length: 100,
-  }).notNull(),
-  salt: text("salt"),
+  id: varchar("id", { length: 100 }).notNull().unique(),
+  email: varchar("email", { length: 100 }).notNull(),
+  userId: int("user_id")
+    .notNull()
+    .references(() => users.id)
+    .unique(),
+  hashVerificationCode: text("hash_verification_code").notNull(),
+  salt: text("salt").notNull(),
   verificationExpiresAt: timestamp("verification_expires_at"),
+  lastUsedAt: timestamp("last_used_at"),
   type: mysqlEnum("type", VerificationType).notNull(),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
@@ -75,11 +88,14 @@ export const userVerifications = mysqlTable("user_verifications", {
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
+  deletedAt: timestamp("deleted_at")
+    .default(sql`null`)
+    .$type<Date | null>(),
 });
 
 export const accessToken = mysqlTable("access_token", {
   id: int("id").autoincrement().primaryKey(),
-  token: varchar("token", { length: 100 }).notNull().unique(),
+  token: text("token").notNull(),
   tokenType: mysqlEnum("token_type", UserType).notNull(),
   name: varchar("name", { length: 50 }),
   tokenableId: int("tokenable_id")
@@ -94,4 +110,7 @@ export const accessToken = mysqlTable("access_token", {
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
+  deletedAt: timestamp("deleted_at")
+    .default(sql`null`)
+    .$type<Date | null>(),
 });
