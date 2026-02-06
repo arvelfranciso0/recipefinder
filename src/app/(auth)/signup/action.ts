@@ -1,7 +1,7 @@
 "use server";
 import { SingupSchema } from "@/schemas/auth";
 import { db } from "@/db";
-import { users, userVerifications } from "@/db/schema";
+import { settings, users, userVerifications } from "@/db/schema";
 import { EmailVerificationCode } from "@/types/email-types";
 import { VerificationTypeEnum } from "@/enums/verification-type-enum";
 import { sendEmailVerification } from "@/services/email.server";
@@ -48,6 +48,8 @@ export async function signUpActions(formData: SingupForm) {
         .values(userData)
         .$returningId();
 
+      await trans.insert(settings).values({ userId: insertedUser.id });
+
       const verifactionSalt = await generateSalt();
       const prefix = "email-verification";
       // Save verifaction code on the database
@@ -75,6 +77,7 @@ export async function signUpActions(formData: SingupForm) {
 
       // send email
       await sendEmailVerification(emailData);
+
       return {
         message: "Account created successfully, please verify your email!",
       };
