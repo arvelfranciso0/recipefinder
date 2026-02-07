@@ -9,8 +9,7 @@ CREATE TABLE `access_token` (
 	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` timestamp DEFAULT null,
-	CONSTRAINT `access_token_id` PRIMARY KEY(`id`),
-	CONSTRAINT `access_token_tokenable_id_unique` UNIQUE(`tokenable_id`)
+	CONSTRAINT `access_token_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `favorites` (
@@ -26,7 +25,7 @@ CREATE TABLE `favorites` (
 CREATE TABLE `settings` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`user_id` int NOT NULL,
-	`theme` enum('DARK','LIGHT') NOT NULL DEFAULT 'LIGHT',
+	`theme` enum('DARK','LIGHT','SYSTEM') NOT NULL DEFAULT 'LIGHT',
 	`dietary_preferences` varchar(100),
 	`measurement_unit` varchar(10),
 	`notification` varchar(10),

@@ -72,7 +72,7 @@ export async function loginActions(formData: LoginForm) {
     });
   } catch (error) {
     console.log("Error:", error);
-    return handleError(error);
+    return { message: "Internal server error!" };
   }
 
   redirect(`/home`);

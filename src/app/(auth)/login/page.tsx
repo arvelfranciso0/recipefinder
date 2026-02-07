@@ -113,6 +113,11 @@ export default function LoginPage() {
                 className="w-full"
                 {...register("email")}
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-between mb-2">
@@ -137,8 +142,6 @@ export default function LoginPage() {
                 icon={Lock}
                 className="w-full"
                 name="password"
-                // value={values.password}
-                // onChange={handleChange}
                 type={showPassword ? "text" : "password"}
               />
 
@@ -149,6 +152,11 @@ export default function LoginPage() {
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-3 pl-2">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
