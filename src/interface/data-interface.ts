@@ -28,4 +28,5 @@ export interface accessTokenInterface {
   name: string;
   tokenableId: number;
   expiresAt: Date;
+  lastUsedAt: Date;
 }

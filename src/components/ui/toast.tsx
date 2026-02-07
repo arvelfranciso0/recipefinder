@@ -31,7 +31,7 @@ const Toast = ({ id, message, type = "success", onClose }: ToastProps) => {
         onClick={() => onClose(id)}
         className="text-muted hover:text-charcoal transition-colors"
       >
-        <X className="w-4 h-4" />
+        <X className="w-4 h-4 cursor-pointer" />
       </button>
     </div>
   );

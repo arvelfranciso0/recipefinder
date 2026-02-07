@@ -26,7 +26,12 @@ export default async function VerificationPage(
     .limit(1);
 
   if ((!verification || verification.length) === 0) {
-    return <InvalidVerificationPage />;
+    return (
+      <InvalidVerificationPage
+        showRequestLink={false}
+        message={`This verification link is no longer available!`}
+      />
+    );
   }
   return <VerificationForm tokenId={id} />;
 }

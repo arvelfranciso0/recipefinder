@@ -1,7 +1,10 @@
 import { AlertCircle, ArrowLeft, RefreshCcw } from "lucide-react";
 import Link from "next/link";
 
-export default function InvalidVerificationPage() {
+export default function InvalidVerificationPage(props: {
+  showRequestLink: boolean;
+  message: string;
+}) {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 font-sans">
       <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-xl p-10 border border-red-50 relative overflow-hidden">
@@ -20,21 +23,19 @@ export default function InvalidVerificationPage() {
           <h2 className="text-2xl font-black text-slate-900 leading-tight">
             Verification <span className="text-red-600">Failed</span>
           </h2>
-          <p className="text-muted text-sm leading-relaxed">
-            The verification link is invalid or has expired. This usually
-            happens if the link has already been used or if it's over 10 minutes
-            old.
-          </p>
+          <p className="text-muted text-sm leading-relaxed">{props.message}</p>
         </div>
 
         {/* Action Buttons */}
         <div className="space-y-4">
-          <Link
-            href="/login"
-            className="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:bg-slate-800 flex items-center justify-center gap-2 active:scale-95"
-          >
-            <RefreshCcw size={18} /> Request New Link
-          </Link>
+          {props.showRequestLink && (
+            <Link
+              href="/login"
+              className="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:bg-slate-800 flex items-center justify-center gap-2 active:scale-95"
+            >
+              <RefreshCcw size={18} /> Request New Link
+            </Link>
+          )}
 
           <Link
             href="/login"

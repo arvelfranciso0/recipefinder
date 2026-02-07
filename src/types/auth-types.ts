@@ -1,3 +1,4 @@
+import VerificationForm from "@/app/(auth)/verify/_components/verification";
 import { LoginSchema, SingupSchema } from "@/schemas/auth";
 import z from "zod";
 
@@ -10,7 +11,4 @@ export type AuthContextType = {
 export type LoginForm = z.infer<typeof LoginSchema>;
 export type SingupForm = z.infer<typeof SingupSchema>;
 
-export type VerifyForm = {
-  code: string;
-  id: string;
-};
+export type VerifyForm = z.infer<typeof VerificationForm>;

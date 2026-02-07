@@ -13,7 +13,11 @@ export async function GET(req: NextRequest) {
   const tokenHash = await generateCryptoHash(token);
 
   const access_token = await findHashTokenByToken(tokenHash);
-  if (!access_token || access_token.expiresAt < new Date())
+  if (
+    !access_token ||
+    access_token.expiresAt < new Date() ||
+    access_token.deletedAt !== null
+  )
     return NextResponse.json({ message: "Session expired" }, { status: 401 });
 
   const user = await getUserSettingByUserId(access_token.tokenableId);
