@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "6213f708-1922-4663-bfb2-592946edfd94",
+  "id": "d599658b-5feb-4ad4-8e26-fbfdfa7e0c26",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "access_token": {
@@ -106,14 +106,7 @@
           ]
         }
       },
-      "uniqueConstraints": {
-        "access_token_tokenable_id_unique": {
-          "name": "access_token_tokenable_id_unique",
-          "columns": [
-            "tokenable_id"
-          ]
-        }
-      },
+      "uniqueConstraints": {},
       "checkConstraint": {}
     },
     "favorites": {
@@ -212,7 +205,7 @@
         },
         "theme": {
           "name": "theme",
-          "type": "enum('DARK','LIGHT')",
+          "type": "enum('DARK','LIGHT','SYSTEM')",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,

@@ -102,8 +102,7 @@ export const accessToken = mysqlTable("access_token", {
   name: varchar("name", { length: 50 }),
   tokenableId: int("tokenable_id")
     .notNull()
-    .references(() => users.id)
-    .unique(),
+    .references(() => users.id),
   expiresAt: timestamp("expires_at").notNull(),
   lastUsedAt: timestamp("last_used_at"),
   createdAt: timestamp("created_at")
