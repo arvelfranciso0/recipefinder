@@ -54,6 +54,7 @@ export async function loginActions(formData: LoginForm) {
       tokenableId: userData.id,
       expiresAt: expiresAt,
       name: "auth",
+      lastUsedAt: new Date(),
     };
 
     //Save the hash token on the database

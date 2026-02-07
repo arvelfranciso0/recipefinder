@@ -21,7 +21,13 @@ export function SignUpForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, isDirty },
+    formState: {
+      errors,
+      isSubmitting,
+      isSubmitSuccessful,
+      isDirty,
+      dirtyFields,
+    },
   } = useForm<SingupForm>({
     resolver: zodResolver(SingupSchema),
   });
@@ -32,8 +38,9 @@ export function SignUpForm() {
   };
 
   useEffect(() => {
+    const hasDirtyFields = Object.keys(dirtyFields).length > 0;
     // Only warn if the form is dirty OR currently submitting
-    if (!isDirty && !isSubmitting) return;
+    if (!hasDirtyFields && !isSubmitting) return;
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -45,7 +52,7 @@ export function SignUpForm() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [isDirty, isSubmitting]);
+  }, [dirtyFields, isSubmitting]);
   return (
     <div className="min-h-screen flex">
       {/* --- Left Hero Section --- */}

@@ -52,3 +52,8 @@ export const LoginSchema = z.object({
       message: "Password must contain at least one special character",
     }),
 });
+
+export const VerificationSchema = z.object({
+  code: z.string(),
+  id: z.string(),
+});

@@ -23,8 +23,10 @@ export async function findHashTokenByToken(hashSessionToken: string) {
 }
 
 export async function deleteAccessTokenByHashToken(hashSessionToken: string) {
+  const now = new Date();
   const [access_token] = await db
-    .delete(accessToken)
+    .update(accessToken)
+    .set({ deletedAt: now })
     .where(
       and(
         eq(accessToken.token, hashSessionToken),
@@ -79,11 +81,6 @@ export async function findUserAccessTokenById(id: string) {
   return verification;
 }
 
-export default {
-  saveAccessToken,
-  findHashTokenByToken,
-};
-
 export async function setAccessTokenLastUseActive(id: string) {
   const now = new Date();
   return await db
@@ -93,3 +90,29 @@ export async function setAccessTokenLastUseActive(id: string) {
       and(eq(userVerifications.id, id), isNull(userVerifications.deletedAt)),
     );
 }
+
+export async function getUserAccessTokenLastUseActiveById(id: string) {
+  const [verification] = await db
+    .select({
+      id: userVerifications.id,
+      lastUsedAt: userVerifications.lastUsedAt,
+    })
+    .from(userVerifications)
+    .where(
+      and(
+        eq(userVerifications.id, id),
+        isNull(userVerifications.lastUsedAt),
+        isNull(userVerifications.deletedAt),
+      ),
+    )
+    .limit(1);
+
+  return verification;
+}
+
+export default {
+  saveAccessToken,
+  findHashTokenByToken,
+  setAccessTokenLastUseActive,
+  getUserAccessTokenLastUseActiveById,
+};
