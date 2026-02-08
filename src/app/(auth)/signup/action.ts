@@ -23,7 +23,7 @@ export async function signUpActions(formData: SingupForm) {
     const result = SingupSchema.safeParse(formData);
 
     if (!result.success) {
-      throw new Error("Invalid data!");
+      return { message: "Invalid Data!", code: "INVALID" };
     }
 
     idToken = await generateIdToken();
@@ -77,10 +77,6 @@ export async function signUpActions(formData: SingupForm) {
 
       // send email
       await sendEmailVerification(emailData);
-
-      return {
-        message: "Account created successfully, please verify your email!",
-      };
     });
   } catch (error: any) {
     console.log("Error: ", error);
