@@ -30,6 +30,13 @@ export async function loginActions(formData: LoginForm) {
       return { message: "Email does not exists!" };
     }
 
+    if (!userData.isEmailVerified) {
+      return {
+        message:
+          "Your email isn’t verified yet. Please check your inbox for the verification code.",
+      };
+    }
+
     const data: verifyPasswordHashInterface = {
       inputPassword: result.data.password,
       salt: userData.salt as string,

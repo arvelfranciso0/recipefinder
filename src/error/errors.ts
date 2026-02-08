@@ -9,10 +9,10 @@ export function handleError(error: unknown) {
       const mysqlErrorCode = (cause as QueryError).code;
 
       if (mysqlErrorCode === "ER_DUP_ENTRY") {
-        return { message: "Email already exists" };
+        return { message: "Email already exists", code: "ER_DUP_ENTRY" };
       }
     }
   }
 
-  return { message: "Error Occured" };
+  return { message: "Error cccured", code: "SEVER_ERROR" };
 }
