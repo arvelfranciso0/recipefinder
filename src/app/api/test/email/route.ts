@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
       // Send email
       const emailData: EmailVerificationCode = {
         toEmail: body.email,
-        from: "demomailtrap.co",
         verificationCode: sixRandomCode,
         subject: "Email Verification",
         idToken,
@@ -45,7 +44,6 @@ export async function POST(req: NextRequest) {
 
       const forgotPassword: ForgotPasswordCode = {
         toEmail: body.email,
-        from: "demomailtrap.co",
         resetCode: sixRandomCode,
         subject: "Reset Password Code",
       };

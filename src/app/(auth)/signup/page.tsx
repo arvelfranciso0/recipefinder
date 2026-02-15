@@ -15,6 +15,7 @@ import { useToast } from "@/context/toastContext";
 import { SingupForm } from "@/types/auth-types";
 import { AlertProps } from "@/interface/alert-interface";
 import Alert from "@/components/ui/alert";
+import SubmitAnimation from "@/components/shared/submitAnimation";
 
 export default function SignupPage() {
   const [check, setCheck] = useState(false);
@@ -29,13 +30,7 @@ export default function SignupPage() {
     register,
     handleSubmit,
     setError,
-    formState: {
-      errors,
-      isSubmitting,
-      isSubmitSuccessful,
-      isDirty,
-      dirtyFields,
-    },
+    formState: { errors, isSubmitting, dirtyFields, isValid },
   } = useForm<SingupForm>({
     resolver: zodResolver(SingupSchema),
   });
@@ -86,7 +81,7 @@ export default function SignupPage() {
 
       <div className="min-h-screen flex">
         {/* --- Left Hero Section --- */}
-        <section className="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden">
+        <section className="hidden lg:block lg:w-1/2 relative overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
             style={{
@@ -315,10 +310,10 @@ export default function SignupPage() {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid}
                 className=" w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] mt-4"
               >
-                {isSubmitting ? "Submitting..." : "Join the Kitchen"}
+                {isSubmitting ? <SubmitAnimation /> : "Join the Kitchen"}
               </Button>
             </form>
 

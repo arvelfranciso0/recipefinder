@@ -1,10 +1,7 @@
 import { AlertCircle, ArrowLeft, RefreshCcw } from "lucide-react";
 import Link from "next/link";
 
-export default function InvalidVerificationPage(props: {
-  showRequestLink: boolean;
-  message: string;
-}) {
+export default function InvalidVerificationPage(props: { message: string }) {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 font-sans">
       <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-xl p-10 border border-red-50 relative overflow-hidden">
@@ -28,15 +25,6 @@ export default function InvalidVerificationPage(props: {
 
         {/* Action Buttons */}
         <div className="space-y-4">
-          {props.showRequestLink && (
-            <Link
-              href="/login"
-              className="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl transition-all shadow-lg hover:bg-slate-800 flex items-center justify-center gap-2 active:scale-95"
-            >
-              <RefreshCcw size={18} /> Request New Link
-            </Link>
-          )}
-
           <Link
             href="/login"
             className="w-full inline-flex items-center justify-center gap-2 text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-colors py-2"

@@ -48,8 +48,7 @@ CREATE TABLE `user_verifications` (
 	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`deleted_at` timestamp DEFAULT null,
-	CONSTRAINT `user_verifications_id_unique` UNIQUE(`id`),
-	CONSTRAINT `user_verifications_user_id_unique` UNIQUE(`user_id`)
+	CONSTRAINT `user_verifications_id_unique` UNIQUE(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
