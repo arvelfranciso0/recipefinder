@@ -2,13 +2,10 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
-
 import { ChefHat } from "@components/icons/chef-hat";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/providers/auth-providers";
 import { InputField } from "../ui/input";
 import { getActiveClass } from "@/libs/utils";
-import Button from "../ui/button";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -31,6 +28,7 @@ export default function Navbar() {
               placeholder="Search ingredients..."
               className="w-100 border-none" // Clean up internal borders
               icon={Search}
+              id="searchIngredients"
             />
           </div>
         </div>

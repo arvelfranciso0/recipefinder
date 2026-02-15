@@ -1,6 +1,5 @@
 "use server";
 
-import { handleError } from "@/error/errors";
 import {
   accessTokenInterface,
   verifyPasswordHashInterface,
@@ -54,7 +53,12 @@ export async function loginActions(formData: LoginForm) {
 
     // Hash the Session to Token
     const hashToken = await generateCryptoHash(sessionToken);
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+    const DAYS_30 = 30 * 24 * 60 * 60 * 1000;
+    const HOURS_8 = 8 * 60 * 60 * 1000;
+    const expiresAt = result.data.rememberMe
+      ? new Date(Date.now() + DAYS_30) // 30 days
+      : new Date(Date.now() + HOURS_8); // 8 hours
     const accessTokenData: accessTokenInterface = {
       token: hashToken,
       tokenType: "USER",
@@ -70,10 +74,11 @@ export async function loginActions(formData: LoginForm) {
     const now = new Date();
     const maxAge = Math.floor((expiresAt.getTime() - now.getTime()) / 1000);
     (await cookies()).set({
+      httpOnly: true,
       name: "auth_session",
       value: sessionToken,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
       path: "/",
       maxAge: maxAge,
     });

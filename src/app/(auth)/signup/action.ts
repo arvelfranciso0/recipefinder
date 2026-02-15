@@ -31,9 +31,9 @@ export async function signUpActions(formData: SingupForm) {
     await db.transaction(async (trans) => {
       const salt = await generateSalt();
       const sixRandomCode = await genereteSixRandomCode();
-      const verificationExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
+      const verificationExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
       const hash = await generateHashPassword(result.data.password, salt);
-
+      const resetCodeTime = new Date(Date.now() + 5 * 60 * 1000);
       const userData = {
         email: result.data.email,
         fullName: result.data.fullName,
@@ -50,26 +50,26 @@ export async function signUpActions(formData: SingupForm) {
 
       await trans.insert(settings).values({ userId: insertedUser.id });
 
-      const verifactionSalt = await generateSalt();
+      const verificationSalt = await generateSalt();
       const prefix = "email-verification";
-      // Save verifaction code on the database
+      // Save verification code on the database
       await trans.insert(userVerifications).values({
         email: result.data.email,
         hashVerificationCode: await generateHash(
           prefix,
           sixRandomCode,
-          verifactionSalt,
+          verificationSalt,
         ),
-        salt: verifactionSalt,
+        salt: verificationSalt,
         verificationExpiresAt,
         type: VerificationTypeEnum.EMAIL,
         id: idToken,
         userId: insertedUser.id,
+        resetCodeTime: resetCodeTime,
       });
 
       const emailData: EmailVerificationCode = {
         toEmail: result.data.email,
-        from: "demomailtrap.co",
         verificationCode: sixRandomCode,
         subject: "Email Verification",
         idToken: idToken,

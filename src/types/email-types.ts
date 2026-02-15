@@ -1,6 +1,5 @@
 export type Email = {
   toEmail: string;
-  from: string;
   subject: string;
 };
 
@@ -9,6 +8,6 @@ export type EmailVerificationCode = Email & {
   idToken: string;
 };
 
-export type ForgotPasswordCode = Email & {
-  resetCode: string;
+export type ForgotPasswordLink = Email & {
+  forgot_password_link: string;
 };

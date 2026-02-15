@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React from "react";
 import { LucideIcon } from "lucide-react";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,8 +11,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
     { icon: Icon, className = "", containerClassName = "", type, ...props },
     ref,
   ) => {
-    const generatedId = useId();
-    const id = props.id || generatedId;
+    const id = props.id;
 
     // Define base styles for the input
     const baseInputStyles =

@@ -77,8 +77,7 @@ export const userVerifications = mysqlTable("user_verifications", {
   email: varchar("email", { length: 100 }).notNull(),
   userId: int("user_id")
     .notNull()
-    .references(() => users.id)
-    .unique(),
+    .references(() => users.id),
   hashVerificationCode: text("hash_verification_code").notNull(),
   salt: text("salt").notNull(),
   verificationExpiresAt: timestamp("verification_expires_at"),
@@ -87,6 +86,7 @@ export const userVerifications = mysqlTable("user_verifications", {
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  resetCodeTime: timestamp("reset_code_time"),
   updatedAt: timestamp("updated_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),

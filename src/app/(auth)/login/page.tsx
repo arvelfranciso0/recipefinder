@@ -9,13 +9,14 @@ import { InputField } from "@/components/ui/input";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { LoginForm } from "@/types/auth-types";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/auth";
 import { loginActions } from "./action";
 import { useToast } from "@/context/toastContext";
 import Alert from "@/components/ui/alert";
 import { AlertProps } from "@/interface/alert-interface";
+import SubmitAnimation from "@/components/shared/submitAnimation";
 
 export default function LoginPage() {
   const [check, setCheck] = useState(false);
@@ -29,10 +30,20 @@ export default function LoginPage() {
   const toast = useToast();
   const {
     register,
+    control,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields },
+    formState: {
+      errors,
+      isSubmitting,
+      isSubmitSuccessful,
+      dirtyFields,
+      isValid,
+    },
   } = useForm<LoginForm>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      rememberMe: false,
+    },
   });
 
   const onSubmit = async (data: LoginForm) => {
@@ -154,58 +165,66 @@ export default function LoginPage() {
                   Password
                 </label>
                 <Link
-                  href="#"
+                  href="/forgot"
                   className="text-sm font-bold text-primary hover:text-primary/80 transition-colors"
                 >
                   Forgot Password?
                 </Link>
               </div>
-              <div className="relative">
-                <InputField
-                  id="password"
-                  {...register("password")}
-                  placeholder="••••••••"
-                  icon={Lock}
-                  className="w-full"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                />
+              <div>
+                <div className="relative">
+                  <InputField
+                    id="password"
+                    {...register("password")}
+                    placeholder="••••••••"
+                    icon={Lock}
+                    className="w-full"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                  />
 
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
                 {errors.password && (
-                  <p className="text-red-500 text-xs mt-3 pl-2">
+                  <p className="text-red-500 text-xs  pl-2">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
               <div className="flex items-center gap-2">
-                <Checkbox
-                  id="remember"
-                  onCheckedChange={() => setCheck(true)}
-                  checked={check}
-                >
-                  <label
-                    htmlFor="remember"
-                    className="text-sm cursor-pointer font-medium text-muted"
-                  >
-                    Keep me signed in
-                  </label>
-                </Checkbox>
+                <Controller
+                  name={"rememberMe"}
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      id="remember"
+                      checked={field.value ?? false}
+                      onCheckedChange={field.onChange}
+                    >
+                      <label
+                        htmlFor="remember"
+                        className="text-sm cursor-pointer font-medium text-muted"
+                      >
+                        Keep me signed in
+                      </label>
+                    </Checkbox>
+                  )}
+                />
               </div>
 
               <Button
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid}
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98]"
               >
-                {isSubmitting ? "Signing in..." : "Sign in"}
+                {isSubmitting ? <SubmitAnimation /> : "Sign in"}
               </Button>
             </form>
 

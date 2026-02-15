@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "2ce5336e-311a-476d-ab79-0d25d0fca81b",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "1c8bd274-adba-45e1-a27d-5bba3d78a526",
+  "prevId": "2ce5336e-311a-476d-ab79-0d25d0fca81b",
   "tables": {
     "access_token": {
       "name": "access_token",
@@ -358,6 +358,13 @@
           "notNull": true,
           "autoincrement": false,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "reset_code_time": {
+          "name": "reset_code_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
