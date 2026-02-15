@@ -4,20 +4,32 @@ import { ChevronRight, Star, TrendingUp, X } from "lucide-react";
 import { MealListingGrid } from "./_components/meal-listing-grid";
 import { CustomSelect } from "@/components/ui/select";
 import { BaseDropdown } from "@/components/ui/dropdown";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Pagination from "@/components/shared/pagination";
 import Link from "next/link";
-
-const categories = [
-  { label: "All Categories", value: "all" },
-  { label: "Breakfast", value: "breakfast" },
-  { label: "Italian", value: "italian" },
-  { label: "Seafood", value: "seafood" },
-  { label: "Vegetarian", value: "vegetarian" },
-];
+import { categories } from "@/libs/data";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { capitalizeFirstLetter } from "@/libs/utils";
 
 export default function MealListingPage() {
   const [sortBy, setSortBy] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category") ?? "";
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  const handleCategoryChange = (value: string) => {
+    router.push(`${pathname}?${createQueryString("category", value)}`);
+  };
+
   return (
     <>
       <nav className="flex items-center gap-2 text-sm  text-muted mb-3">
@@ -70,27 +82,9 @@ export default function MealListingPage() {
           <div className="w-full sm:w-auto">
             <CustomSelect
               options={categories}
-              onSelect={(val) => console.log("Selected:", val)}
+              defaultValue={capitalizeFirstLetter(category)}
+              onSelect={(val) => handleCategoryChange(val)}
             />
-          </div>
-
-          {/* Tags area: Flex-wrap is key here */}
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Active Filter Chip */}
-            <div className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl shadow-md shadow-primary/20 text-sm font-bold whitespace-nowrap">
-              <span>Italian</span>
-              <X className="w-4 h-4 cursor-pointer hover:opacity-80" />
-            </div>
-
-            {/* Suggestion Chip */}
-            <button className="px-4 py-2.5 bg-background text-foreground border border-gray-200 dark:border-white/10 shadow-sm rounded-xl text-sm font-semibold hover:bg-muted/50 transition-colors whitespace-nowrap">
-              Lunch
-            </button>
-
-            {/* Action Link */}
-            <button className="px-2 py-2.5 text-primary text-sm font-bold hover:underline active:opacity-70 transition-all">
-              Clear all
-            </button>
           </div>
         </div>
       </div>

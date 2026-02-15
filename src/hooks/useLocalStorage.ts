@@ -21,5 +21,5 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
-  return [storedValue, setValue] as const; // 👈 IMPORTANT
+  return [storedValue, setValue] as const;
 }

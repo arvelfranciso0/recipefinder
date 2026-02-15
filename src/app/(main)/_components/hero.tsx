@@ -30,6 +30,7 @@ export default function Hero() {
         <div className="mt-8 md:mt-10 w-full max-w-2xl mx-auto p-2 bg-white dark:bg-white/5 rounded-2xl soft-shadow border border-gray-100 dark:border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
           <div className="flex-1">
             <InputField
+              id="search"
               placeholder="Search ingredients..."
               className="w-full border-none bg-transparent focus:ring-0" // Clean up internal borders
               icon={Search}

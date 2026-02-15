@@ -1,19 +1,19 @@
 {
   "version": "7",
-  "dialect": "postgresql",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1769330841415,
-      "tag": "0000_initial-migration",
+      "version": "5",
+      "when": 1770621128139,
+      "tag": "0000_slim_talkback",
       "breakpoints": true
     },
     {
       "idx": 1,
-      "version": "7",
-      "when": 1769331193618,
-      "tag": "0001_enum-migration",
+      "version": "5",
+      "when": 1770682924213,
+      "tag": "0001_polite_amphibian",
       "breakpoints": true
     }
   ]
