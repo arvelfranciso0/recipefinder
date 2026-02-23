@@ -1,7 +1,6 @@
-"use client";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
-import { AuthProvider, useAuth } from "@/providers/auth-providers";
+import Providers from "@/providers/auth/wrapper";
 import { ThemeProvider } from "next-themes";
 
 function ProtectedWrapper({ children }: { children: React.ReactNode }) {
@@ -22,9 +21,9 @@ export default function MainLayout({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AuthProvider>
+      <Providers>
         <ProtectedWrapper>{children}</ProtectedWrapper>
-      </AuthProvider>
+      </Providers>
     </ThemeProvider>
   );
 }

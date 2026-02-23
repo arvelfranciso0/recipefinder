@@ -25,117 +25,62 @@ export const diets: DietsInterface[] = [
 ];
 
 export const mealsArea = [
-  {
-    area: "Algerian",
-  },
-  {
-    area: "American",
-  },
-  {
-    area: "Argentinian",
-  },
-  {
-    area: "Australian",
-  },
-  {
-    area: "British",
-  },
-  {
-    area: "Canadian",
-  },
-  {
-    area: "Chinese",
-  },
-  {
-    area: "Croatian",
-  },
-  {
-    area: "Dutch",
-  },
-  {
-    area: "Egyptian",
-  },
-  {
-    area: "Filipino",
-  },
-  {
-    area: "French",
-  },
-  {
-    area: "Greek",
-  },
-  {
-    area: "Indian",
-  },
-  {
-    area: "Irish",
-  },
-  {
-    area: "Italian",
-  },
-  {
-    area: "Jamaican",
-  },
-  {
-    area: "Japanese",
-  },
-  {
-    area: "Kenyan",
-  },
-  {
-    area: "Malaysian",
-  },
-  {
-    area: "Mexican",
-  },
-  {
-    area: "Moroccan",
-  },
-  {
-    area: "Norwegian",
-  },
-  {
-    area: "Polish",
-  },
-  {
-    area: "Portuguese",
-  },
-  {
-    area: "Russian",
-  },
-  {
-    area: "Saudi Arabian",
-  },
-  {
-    area: "Slovakian",
-  },
-  {
-    area: "Spanish",
-  },
-  {
-    area: "Syrian",
-  },
-  {
-    area: "Thai",
-  },
-  {
-    area: "Tunisian",
-  },
-  {
-    area: "Turkish",
-  },
-  {
-    area: "Ukrainian",
-  },
-  {
-    area: "Uruguayan",
-  },
-  {
-    area: "Venezulan",
-  },
-  {
-    area: "Vietnamese",
-  },
+  { id: "0", label: "Clear Filter", value: "" },
+  { id: "1", label: "Algerian", value: "algerian" },
+  { id: "2", label: "American", value: "american" },
+  { id: "3", label: "Argentinian", value: "argentinian" },
+  { id: "4", label: "Australian", value: "australian" },
+  { id: "5", label: "British", value: "british" },
+  { id: "6", label: "Canadian", value: "canadian" },
+  { id: "7", label: "Chinese", value: "chinese" },
+  { id: "8", label: "Croatian", value: "croatian" },
+  { id: "9", label: "Dutch", value: "dutch" },
+  { id: "10", label: "Egyptian", value: "egyptian" },
+  { id: "11", label: "Filipino", value: "filipino" },
+  { id: "12", label: "French", value: "french" },
+  { id: "13", label: "Greek", value: "greek" },
+  { id: "14", label: "Indian", value: "indian" },
+  { id: "15", label: "Irish", value: "irish" },
+  { id: "16", label: "Italian", value: "italian" },
+  { id: "17", label: "Jamaican", value: "jamaican" },
+  { id: "18", label: "Japanese", value: "japanese" },
+  { id: "19", label: "Kenyan", value: "kenyan" },
+  { id: "20", label: "Malaysian", value: "malaysian" },
+  { id: "21", label: "Mexican", value: "mexican" },
+  { id: "22", label: "Moroccan", value: "moroccan" },
+  { id: "23", label: "Norwegian", value: "norwegian" },
+  { id: "24", label: "Polish", value: "polish" },
+  { id: "25", label: "Portuguese", value: "portuguese" },
+  { id: "26", label: "Russian", value: "russian" },
+  { id: "27", label: "Saudi Arabian", value: "saudi-arabian" },
+  { id: "28", label: "Slovakian", value: "slovakian" },
+  { id: "29", label: "Spanish", value: "spanish" },
+  { id: "30", label: "Syrian", value: "syrian" },
+  { id: "31", label: "Thai", value: "thai" },
+  { id: "32", label: "Tunisian", value: "tunisian" },
+  { id: "33", label: "Turkish", value: "turkish" },
+  { id: "34", label: "Ukrainian", value: "ukrainian" },
+  { id: "35", label: "Uruguayan", value: "uruguayan" },
+  { id: "36", label: "Venezuelan", value: "venezuelan" },
+  { id: "37", label: "Vietnamese", value: "vietnamese" },
+];
+
+export const categoriesData = [
+  { id: "0", label: "Clear Filter", value: "" },
+  { id: "1", label: "Beef", value: "beef" },
+  { id: "2", label: "Breakfast", value: "breakfast" },
+  { id: "3", label: "Chicken", value: "chicken" },
+  { id: "4", label: "Dessert", value: "dessert" },
+  { id: "5", label: "Goat", value: "goat" },
+  { id: "6", label: "Lamb", value: "lamb" },
+  { id: "7", label: "Miscellaneous", value: "miscellaneous" },
+  { id: "8", label: "Pasta", value: "pasta" },
+  { id: "9", label: "Pork", value: "pork" },
+  { id: "10", label: "Seafood", value: "seafood" },
+  { id: "11", label: "Side", value: "side" },
+  { id: "12", label: "Starter", value: "starter" },
+  { id: "13", label: "Vegan", value: "vegan" },
+  { id: "14", label: "Vegetarian", value: "vegetarian" },
 ];
 
 export const categories: CategoriesInteface[] = [

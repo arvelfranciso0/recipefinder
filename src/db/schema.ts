@@ -38,6 +38,7 @@ export const favorites = mysqlTable("favorites", {
     .notNull()
     .references(() => users.id),
   mealId: text("meal_id"),
+  mealName: text("meal_name"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
