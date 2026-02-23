@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/ui/button";
+import { IngredientItem } from "@/interface/recipe-interface";
 import {
   ShoppingBasket,
   Clock,
@@ -19,10 +20,12 @@ const RecipeHero = ({
   title,
   category,
   image,
+  area,
 }: {
   title: string;
   category: string;
   image: string;
+  area: string;
 }) => (
   <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden shadow-2xl mb-8 group">
     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent z-10" />
@@ -37,15 +40,12 @@ const RecipeHero = ({
           {category}
         </span>
         <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          Main Dish
+          {area}
         </span>
       </div>
       <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
         {title}
       </h1>
-      <p className="text-white/80 font-medium">
-        Authentic slow-cooked meat sauce & creamy ricotta
-      </p>
     </div>
     <div className="absolute top-6 right-6 z-20">
       <button className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-3 rounded-full hover:scale-110 transition-transform shadow-lg group">
@@ -90,7 +90,7 @@ const RecipeStats = () => (
 );
 
 // --- Sub-component: Ingredients ---
-const IngredientList = ({ ingredients }: { ingredients: any[] }) => (
+const IngredientList = ({ ingredients }: { ingredients: IngredientItem[] }) => (
   <aside className="lg:col-span-4 space-y-6">
     <div className=" dark:bg-white/5 rounded-2xl p-6 shadow-sm  sticky top-24">
       <div className="flex items-center justify-between mb-6">
@@ -98,9 +98,9 @@ const IngredientList = ({ ingredients }: { ingredients: any[] }) => (
           <ShoppingBasket className="text-primary w-6 h-6" />
           Ingredients
         </h3>
-        <span className="text-xs font-bold text-muted uppercase tracking-widest">
+        {/* <span className="text-xs font-bold text-muted uppercase tracking-widest">
           8 Servings
-        </span>
+        </span> */}
       </div>
       <ul className="space-y-4">
         {ingredients.map((ing, i) => (
@@ -113,11 +113,11 @@ const IngredientList = ({ ingredients }: { ingredients: any[] }) => (
                 <Check className="text-primary w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <span className="text-sm font-medium text-foreground">
-                {ing.name}
+                {ing.ingredient}
               </span>
             </div>
             <span className="text-sm font-bold text-foreground/40">
-              {ing.amount}
+              {ing.measure}
             </span>
           </li>
         ))}

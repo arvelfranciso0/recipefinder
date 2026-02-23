@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { settings, users, userVerifications } from "@/db/schema";
 import { EmailVerificationCode } from "@/types/email-types";
 import { VerificationTypeEnum } from "@/enums/verification-type-enum";
-import { sendEmailVerification } from "@/services/email.server";
+import { sendEmailVerification } from "@/services/email.service";
 import {
   generateHash,
   generateHashPassword,

@@ -1,74 +1,94 @@
 "use client";
 
-import { Recipe } from "@/types/recipe-types";
-import { Heart, Clock, BarChart2, ChevronRight } from "lucide-react";
+import {
+  MealCardInterface,
+  RecipeMealInterface,
+} from "@/interface/recipe-interface";
+import { Heart, MapPin, Utensils } from "lucide-react";
 import Link from "next/link";
 
 export default function MealCard({
-  title,
-  time,
-  difficulty,
-  tag,
-  tagColor,
-  image,
+  meal,
   id,
-  rating,
+  imageURL,
   isFavorite,
-}: Recipe) {
+  area,
+  category,
+  handleFavorite,
+  tags = [],
+  isPending,
+}: MealCardInterface) {
   return (
-    <article className="bg-white dark:bg-white/5 rounded-3xl overflow-hidden soft-shadow group hover:shadow-xl transition-all duration-300 border border-transparent dark:border-white/5">
-      <div className="relative h-64 w-full overflow-hidden">
-        {/* Image Background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-          style={{ backgroundImage: `url('${image}')` }}
-        />
-
-        {/* Favorite Button */}
-        <button className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-foreground hover:text-red-500 transition-colors">
-          <Heart
-            className={`w-5 h-5 transition-colors duration-300 ${
-              isFavorite
-                ? "text-primary fill-primary"
-                : "text-muted fill-transparent"
-            }`}
+    <Link href={`/recipe/${id}`} className="block group">
+      <article className="bg-white dark:bg-white/5 rounded-4xl overflow-hidden soft-shadow transition-all duration-500 border border-slate-100 dark:border-white/5 flex flex-col h-full group-hover:shadow-2xl group-hover:-translate-y-1">
+        {/* Image Section */}
+        <div className="relative h-48 w-full overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+            style={{ backgroundImage: `url('${imageURL}')` }}
           />
-        </button>
-      </div>
 
-      <div className="p-6">
-        <div className="flex items-center gap-4 text-xs font-semibold text-muted dark:text-gray-400 mb-2">
-          <span className="flex items-center gap-1">
-            <Clock className="w-4 h-4" /> {time}
-          </span>
-          <span className="flex items-center gap-1">
-            <BarChart2 className="w-4 h-4" /> {difficulty}
-          </span>
+          <button
+            onClick={handleFavorite}
+            disabled={isPending}
+            className={`absolute ${isPending ? "cursor-not-allowed" : "cursor-pointer"} top-3 right-3 bg-white/90 dark:bg-background/90 backdrop-blur-md p-2 rounded-full hover:scale-110 active:scale-90 transition-all shadow-sm z-20`}
+          >
+            <Heart
+              className={`w-5 h-5 transition-colors duration-300 ${
+                isFavorite
+                  ? "text-primary fill-primary hover:fill-transparent"
+                  : "text-muted fill-transparent hover:fill-primary hover:text-primary"
+              }`}
+            />
+          </button>
         </div>
 
-        <h4 className="text-xl font-bold text-foreground  group-hover:text-primary transition-colors">
-          {title}
-        </h4>
+        {/* Content Section */}
+        <div className="p-4 flex flex-col gap-1.5">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1 min-h-4.5">
+            {tags && tags.length > 0 ? (
+              tags.slice(0, 2).map((tag, index) => (
+                <span
+                  key={tag + index}
+                  className="text-[9px] font-black uppercase tracking-tight bg-primary/10 text-primary px-2 py-0.5 rounded-md"
+                >
+                  {tag}
+                </span>
+              ))
+            ) : (
+              <span className="text-[9px] font-bold uppercase tracking-tight text-muted/30 border border-muted/10 px-2 py-0.5 rounded-md">
+                Recipe
+              </span>
+            )}
+          </div>
 
-        <div className="mt-6 flex items-center justify-between">
-          {/* Tag */}
-          <span
-            className={`bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold ${tagColor}`}
-          >
-            {tag}
-          </span>
+          {/* Title */}
+          <h4 className="text-lg font-black text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">
+            {meal}
+          </h4>
 
-          <div className="mt-auto flex items-center justify-between gap-3">
-            <Link
-              href={`/recipe/${id}`}
-              className="text-sm font-bold text-primary flex items-center gap-1 group/btn"
-            >
-              View Recipe
-              <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-            </Link>
+          {/* Bottom Info Row */}
+          <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-50 dark:border-white/5">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1 text-[11px] font-bold text-muted">
+                <MapPin size={12} className="text-primary shrink-0" />
+                <span className="truncate max-w-17.5">{area}</span>
+              </div>
+
+              <div className="flex items-center gap-1 text-[11px] font-bold text-muted">
+                <Utensils size={11} className="text-primary shrink-0" />
+                <span className="truncate max-w-17.5">{category}</span>
+              </div>
+            </div>
+
+            {/* Minimal Visual Indicator (Optional) */}
+            <div className="w-6 h-6 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-colors">
+              <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-primary group-hover:border-white rotate-45 -ml-px" />
+            </div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }

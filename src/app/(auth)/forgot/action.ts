@@ -11,7 +11,7 @@ import {
 } from "@/libs/utils";
 import { findByEmail } from "@/repository/user";
 import { FortgotPasswordSchema } from "@/schemas/auth";
-import { sendForgotPasswordLink } from "@/services/email.server";
+import { sendForgotPasswordLink } from "@/services/email.service";
 import { ForgotPasswordForm } from "@/types/auth-types";
 import { ForgotPasswordLink } from "@/types/email-types";
 
