@@ -12,7 +12,7 @@ import {
   getUserVerificationLastUseActiveById,
 } from "@/repository/user_verification";
 import { VerificationIdSchema } from "@/schemas/auth";
-import { sendEmailVerification } from "@/services/email.server";
+import { sendEmailVerification } from "@/services/email.service";
 import { EmailVerificationCode } from "@/types/email-types";
 import { and, eq, lt } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";

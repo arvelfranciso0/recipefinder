@@ -2,6 +2,7 @@ import { Camera, Globe, Video } from "lucide-react";
 import Link from "next/link";
 import { ChefHat } from "../icons/chef-hat";
 import { QuickCategories, QuickLinks } from "@/libs/urls";
+import { categoriesData } from "@/libs/data";
 
 export default function Footer() {
   return (
@@ -46,10 +47,10 @@ export default function Footer() {
               Categories
             </h5>
             <ul className="space-y-4 text-sm text-muted ">
-              {QuickCategories.map((item) => (
+              {categoriesData.slice(1, 7).map((item) => (
                 <li key={item.id}>
                   <Link
-                    href={`/recipe?${item.href}`}
+                    href={`/recipe?${item.value}`}
                     className="hover:text-primary transition-colors"
                   >
                     {item.label}

@@ -21,7 +21,7 @@ export default function useForm<T extends Record<string, any>>(
   const handleSubmit =
     (callback: (values: T) => void) => (event: React.FormEvent) => {
       event.preventDefault();
-      console.log("Submit Value", validate());
+
       if (validate()) {
         callback(values);
       }

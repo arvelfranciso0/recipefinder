@@ -2,7 +2,7 @@
 
 import { sideNavbar } from "@/libs/urls";
 import { getActiveClass } from "@/libs/utils";
-import { useAuth } from "@/providers/auth-providers";
+import { useAuth } from "@/providers/auth/providers";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { LogOut } from "lucide-react";
 import Link from "next/link";

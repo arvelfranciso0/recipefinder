@@ -10,3 +10,5 @@ const pool = await mysql.createPool({
 });
 
 export const db = drizzle({ client: pool });
+
+export type Database = typeof db;
