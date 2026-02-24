@@ -1,1 +1,0 @@
-ALTER TABLE `favorites` ADD `meal_name` text;

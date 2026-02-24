@@ -19,7 +19,7 @@ export default function MealCard({
   isPending,
 }: MealCardInterface) {
   return (
-    <Link href={`/recipe/${id}`} className="block group">
+    <Link href={`/meal/${id}`} className="block group">
       <article className="bg-white dark:bg-white/5 rounded-4xl overflow-hidden soft-shadow transition-all duration-500 border border-slate-100 dark:border-white/5 flex flex-col h-full group-hover:shadow-2xl group-hover:-translate-y-1">
         {/* Image Section */}
         <div className="relative h-48 w-full overflow-hidden">

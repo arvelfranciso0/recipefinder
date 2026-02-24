@@ -30,3 +30,8 @@ export interface accessTokenInterface {
   expiresAt: Date;
   lastUsedAt: Date;
 }
+export interface MealLableInterface {
+  id: string;
+  label: string;
+  value: string;
+}

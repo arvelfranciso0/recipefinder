@@ -1,1 +1,0 @@
-ALTER TABLE `user_verifications` ADD `reset_code_time` timestamp;

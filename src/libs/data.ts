@@ -1,4 +1,8 @@
-import { CategoriesInteface, DietsInterface } from "@/interface/data-interface";
+import {
+  CategoriesInteface,
+  DietsInterface,
+  MealLableInterface,
+} from "@/interface/data-interface";
 import {
   Beef,
   Cake,
@@ -24,8 +28,7 @@ export const diets: DietsInterface[] = [
   { id: "paleo", label: "Paleo", isChecked: false },
 ];
 
-export const mealsArea = [
-  { id: "0", label: "Clear Filter", value: "" },
+export const mealsArea: MealLableInterface[] = [
   { id: "1", label: "Algerian", value: "algerian" },
   { id: "2", label: "American", value: "american" },
   { id: "3", label: "Argentinian", value: "argentinian" },
@@ -65,8 +68,7 @@ export const mealsArea = [
   { id: "37", label: "Vietnamese", value: "vietnamese" },
 ];
 
-export const categoriesData = [
-  { id: "0", label: "Clear Filter", value: "" },
+export const categoriesData: MealLableInterface[] = [
   { id: "1", label: "Beef", value: "beef" },
   { id: "2", label: "Breakfast", value: "breakfast" },
   { id: "3", label: "Chicken", value: "chicken" },

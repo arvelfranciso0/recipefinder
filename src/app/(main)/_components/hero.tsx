@@ -4,6 +4,7 @@ import Button from "@/components/ui/button";
 import { InputField } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import SearchWithSuggestions from "../home/searchSuggestion";
 
 export default function Hero() {
   return (
@@ -27,11 +28,12 @@ export default function Hero() {
         </p>
 
         {/* Main Search Container */}
-        <div className="mt-8 md:mt-10 w-full max-w-2xl mx-auto p-2 bg-white dark:bg-white/5 rounded-2xl soft-shadow border border-gray-100 dark:border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+        <SearchWithSuggestions />
+        {/* <div className="mt-8 md:mt-10 w-full max-w-2xl mx-auto p-2 bg-white dark:bg-white/5 rounded-2xl soft-shadow border border-gray-100 dark:border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
           <div className="flex-1">
             <InputField
               id="search"
-              placeholder="Search ingredients..."
+              placeholder="Search meal..."
               className="w-full border-none bg-transparent focus:ring-0" // Clean up internal borders
               icon={Search}
             />
@@ -39,7 +41,7 @@ export default function Hero() {
           <Button className="w-full sm:w-auto px-8 py-3.5 rounded-xl shadow-lg flex items-center justify-center gap-2 text-base font-semibold">
             Search
           </Button>
-        </div>
+        </div> */}
 
         {/* Trending Tags */}
         <div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 pt-4">

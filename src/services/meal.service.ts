@@ -1,4 +1,11 @@
-import { ApiMeal, RecipeMealList } from "@/interface/recipe-interface";
+import {
+  ApiMeal,
+  ApiResponse,
+  IngredientApiResponse,
+  IngredientInterface,
+  IngredientItem,
+  RecipeMealList,
+} from "@/interface/recipe-interface";
 import { mapMealDetail } from "@/libs/utils";
 import axios, { AxiosResponse } from "axios";
 
@@ -56,12 +63,22 @@ export class TheMealDbApiService {
   }
 
   // List all ingredients
-  static async listIngredients(): Promise<any> {
+  static async listIngredients(): Promise<IngredientApiResponse[]> {
     return axios
       .get(`${this.BASE_URL}/list.php?i=list`)
-      .then((res: AxiosResponse) => res.data)
+      .then((res: AxiosResponse) => res.data.meals)
       .catch((err) => {
         throw new Error(`Failed to fetch ingredients: ${err.message}`);
+      });
+  }
+
+  //Get all meals by first letters
+  static async searchByFirstLetter(firstLetter: string): Promise<ApiMeal[]> {
+    return axios
+      .get(`${this.BASE_URL}/search.php?f=${firstLetter}`)
+      .then((res: AxiosResponse) => res.data.meals)
+      .catch((err) => {
+        throw new Error(`Failed to fetch meal: ${err.message}`);
       });
   }
 
@@ -85,6 +102,9 @@ export class TheMealDbApiService {
           tags: mapResultRecipeDetails.tags ?? [],
           isFavorite: false,
           category: mapResultRecipeDetails.category,
+          ingredients: mapResultRecipeDetails.ingredients.map(
+            (value: IngredientItem) => value.ingredient,
+          ),
         };
       }),
     );

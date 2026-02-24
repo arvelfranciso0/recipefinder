@@ -106,7 +106,7 @@ const IngredientList = ({ ingredients }: { ingredients: IngredientItem[] }) => (
         {ingredients.map((ing, i) => (
           <li
             key={i}
-            className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-3 group"
+            className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-3 pr-3 group"
           >
             <div className="flex items-center gap-3">
               <div className="size-5 rounded-md border-2 border-primary/30 group-hover:border-primary transition-colors cursor-pointer flex items-center justify-center">

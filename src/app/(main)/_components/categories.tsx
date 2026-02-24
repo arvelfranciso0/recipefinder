@@ -39,7 +39,7 @@ export default function Categories() {
           </p>
         </div>
         <Link
-          href="/recipe"
+          href="/meal"
           className="text-primary font-black text-sm flex items-center gap-1 hover:underline group/link"
         >
           View All

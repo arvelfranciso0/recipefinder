@@ -7,9 +7,7 @@ import {
 import { TheMealDbApiService } from "@/services/meal.service";
 import { getYoutubeEmbedUrl, mapMealDetail } from "@/libs/utils";
 
-export default async function RecipeDetailPage(
-  props: PageProps<"/recipe/[id]">,
-) {
+export default async function RecipeDetailPage(props: PageProps<"/meal/[id]">) {
   const { id } = await props.params;
   const recipeDetailsResult = await TheMealDbApiService.lookupMealById(id);
   const mapResultRecipeDetails = await mapMealDetail(recipeDetailsResult[0]);
