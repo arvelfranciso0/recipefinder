@@ -7,7 +7,7 @@ import { FavoriteType } from "@/types/favorite-type";
 import { revalidatePath } from "next/cache";
 
 export async function toggleFavorite(
-  mealId: string,
+  mealId: number,
   isFavorite: boolean,
   id: number,
 ) {
@@ -30,5 +30,5 @@ export async function toggleFavorite(
     );
   }
 
-  revalidatePath("/recipe");
+  revalidatePath("/meal");
 }

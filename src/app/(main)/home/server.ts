@@ -3,18 +3,13 @@ import {
   RecipeMealInterface,
   RecipeMealList,
 } from "@/interface/recipe-interface";
-import { mapMeals } from "@/libs/utils";
+
 import { FavoriteRepository } from "@/repository/favorite";
 import { AuthService } from "@/services/auth.service";
 import { TheMealDbApiService } from "@/services/meal.service";
 
-interface CachedMeal {
-  meal: RecipeMealList;
-  date: string; // YYYY-MM-DD
-}
-
 export async function getFeaturedMeals(): Promise<RecipeMealList> {
-  const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
   const favoriteRepository = new FavoriteRepository(db);
   const authUser = new AuthService();
 

@@ -13,11 +13,11 @@ export const MealListingGrid = ({ recipes }: { recipes: RecipeMealList }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleFavorite = (
-    mealId: string,
+    mealId: number,
     e: React.MouseEvent,
     isFavorite: boolean,
     mealName: string,
-    id?: number,
+    id: number | null,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -44,7 +44,7 @@ export const MealListingGrid = ({ recipes }: { recipes: RecipeMealList }) => {
               e,
               recipe.isFavorite,
               recipe.meal,
-              recipe?.favoriteId,
+              recipe.favoriteId,
             )
           }
           isPending={isPending}

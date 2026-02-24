@@ -13,7 +13,7 @@ export async function proxy(req: NextRequest) {
   if (
     pathname.startsWith("/settings") ||
     pathname.startsWith("/favorites") ||
-    pathname.startsWith("/recipe") ||
+    pathname.startsWith("/meal") ||
     pathname.startsWith("/home")
   ) {
     if (!token) {
@@ -44,7 +44,7 @@ export const config = {
     "/settings/:path*",
     "/home/:path*",
     "/favorites/:path*",
-    "/recipe/:path*",
+    "/meal/:path*",
     "/api/meal/:path*",
     "/login",
     "/signup",

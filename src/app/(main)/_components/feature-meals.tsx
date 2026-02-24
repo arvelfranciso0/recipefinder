@@ -1,11 +1,7 @@
 "use client";
 
-import MealCard from "@/components/shared/mealCard";
-import {
-  RecipeMealInterface,
-  RecipeMealList,
-} from "@/interface/recipe-interface";
-import { MealListingGrid } from "../recipe/_components/meal-listing-grid";
+import { RecipeMealList } from "@/interface/recipe-interface";
+import { MealListingGrid } from "../meal/_components/meal-listing-grid";
 
 export default function FeaturedMeals({
   featureMeals,

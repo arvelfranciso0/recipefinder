@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1770621128139,
-      "tag": "0000_slim_talkback",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1770682924213,
-      "tag": "0001_polite_amphibian",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1771727779139,
-      "tag": "0002_fast_orphan",
+      "when": 1771929655566,
+      "tag": "0000_lovely_lilandra",
       "breakpoints": true
     }
   ]
