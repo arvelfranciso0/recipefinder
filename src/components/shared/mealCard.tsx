@@ -6,17 +6,17 @@ import {
 } from "@/interface/recipe-interface";
 import { Heart, MapPin, Utensils } from "lucide-react";
 import Link from "next/link";
+import FavoriteButton from "./favoriteButton";
 
 export default function MealCard({
   meal,
   id,
   imageURL,
   isFavorite,
+  favoriteId,
   area,
   category,
-  handleFavorite,
   tags = [],
-  isPending,
 }: MealCardInterface) {
   return (
     <Link href={`/meal/${id}`} className="block group">
@@ -28,19 +28,12 @@ export default function MealCard({
             style={{ backgroundImage: `url('${imageURL}')` }}
           />
 
-          <button
-            onClick={handleFavorite}
-            disabled={isPending}
-            className={`absolute ${isPending ? "cursor-not-allowed" : "cursor-pointer"} top-3 right-3 bg-white/90 dark:bg-background/90 backdrop-blur-md p-2 rounded-full hover:scale-110 active:scale-90 transition-all shadow-sm z-20`}
-          >
-            <Heart
-              className={`w-5 h-5 transition-colors duration-300 ${
-                isFavorite
-                  ? "text-primary fill-primary hover:fill-transparent"
-                  : "text-muted fill-transparent hover:fill-primary hover:text-primary"
-              }`}
-            />
-          </button>
+          <FavoriteButton
+            id={id}
+            meal={meal}
+            isFavorite={isFavorite}
+            favoriteId={favoriteId}
+          />
         </div>
 
         {/* Content Section */}

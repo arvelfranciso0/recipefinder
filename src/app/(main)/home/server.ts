@@ -1,47 +1,47 @@
 import { db } from "@/db";
 import {
+  FeatureMealInterface,
+  MealWithFavoriteInterface,
   RecipeMealInterface,
   RecipeMealList,
 } from "@/interface/recipe-interface";
+import { convertIngredientsToArray } from "@/libs/utils";
 
 import { FavoriteRepository } from "@/repository/favorite";
+import { MealRepository } from "@/repository/meal";
 import { AuthService } from "@/services/auth.service";
 import { TheMealDbApiService } from "@/services/meal.service";
 
 export async function getFeaturedMeals(): Promise<RecipeMealList> {
   // const today = new Date().toISOString().split("T")[0];
-  const favoriteRepository = new FavoriteRepository(db);
+  const mealRepository = new MealRepository(db);
   const authUser = new AuthService();
 
   try {
-    // Fetch a list of meals
-    const resultMealByArea = await TheMealDbApiService.filterByArea("American");
-    if (!resultMealByArea.length) {
-      return []; // return empty array for server component
-    }
-
-    const limitedMeals = resultMealByArea.slice(0, 3);
-    const mealsId = limitedMeals.map((meal) => meal.idMeal);
-
-    const recipes = await TheMealDbApiService.listAllRecipe(mealsId);
-
     const user = await authUser.getAuthenticatedUser();
-
-    const allRecipeByUserId = await favoriteRepository.getAllFavoritesByUserId(
+    const featureMeal = await mealRepository.getFeaturedMeals(
       user?.id as number,
     );
 
-    const recipesWithFavorite = recipes.map((meal: RecipeMealInterface) => {
-      const favorite = allRecipeByUserId.find((fav) => fav.mealId === meal.id);
+    const result: RecipeMealList = featureMeal.map(
+      (value: FeatureMealInterface) => {
+        const mapResultRecipeDetails = convertIngredientsToArray(value);
 
-      return {
-        ...meal,
-        isFavorite: !!favorite,
-        favoriteId: favorite?.id as number,
-      };
-    });
+        return {
+          id: value.id as number,
+          meal: value.name ?? "",
+          imageURL: value.thumbnail ?? "",
+          area: value.area ?? "",
+          tags: value.tags?.split(",") ?? [],
+          isFavorite: value.favoriteId !== null,
+          favoriteId: value.favoriteId ?? null,
+          category: value.category ?? "",
+          ingredients: mapResultRecipeDetails,
+        };
+      },
+    );
 
-    return recipesWithFavorite;
+    return result;
   } catch (error) {
     console.error("Error fetching featured meal:", error);
     return [];

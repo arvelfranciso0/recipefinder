@@ -1,7 +1,17 @@
 import { Database } from "@/db";
 import { favorites, meals } from "@/db/schema";
 import { MealWithFavoriteInterface } from "@/interface/recipe-interface";
-import { and, count, eq, getTableColumns, like, or, sql } from "drizzle-orm";
+import {
+  and,
+  count,
+  desc,
+  eq,
+  getTableColumns,
+  isNull,
+  like,
+  or,
+  sql,
+} from "drizzle-orm";
 
 export class MealRepository {
   private now = new Date();
@@ -47,7 +57,11 @@ export class MealRepository {
       .from(meals)
       .leftJoin(
         favorites,
-        and(eq(meals.id, favorites.mealId), eq(favorites.userId, userId)),
+        and(
+          eq(meals.id, favorites.mealId),
+          eq(favorites.userId, userId),
+          isNull(favorites.deletedAt),
+        ),
       )
       .where(
         and(
@@ -77,7 +91,11 @@ export class MealRepository {
       .from(meals)
       .leftJoin(
         favorites,
-        and(eq(meals.id, favorites.mealId), eq(favorites.userId, userId)),
+        and(
+          eq(meals.id, favorites.mealId),
+          eq(favorites.userId, userId),
+          isNull(favorites.deletedAt),
+        ),
       )
       .where(
         and(
@@ -94,5 +112,62 @@ export class MealRepository {
       );
 
     return result[0]?.count ?? 0;
+  }
+
+  async getFeaturedMeals(userId: number) {
+    const totalFavoritesSubquery = this.db
+      .select({
+        mealId: favorites.mealId,
+        totalFavorites: count(favorites.id).as("totalFavorites"),
+      })
+      .from(favorites)
+      .groupBy(favorites.mealId)
+      .as("totalFavoritesSubquery");
+
+    return this.db
+      .select({
+        ...getTableColumns(meals),
+        totalFavorites: totalFavoritesSubquery.totalFavorites,
+        favoriteId: favorites.id,
+      })
+      .from(meals)
+      .leftJoin(
+        totalFavoritesSubquery,
+        eq(meals.id, totalFavoritesSubquery.mealId),
+      )
+      .leftJoin(
+        favorites,
+        and(
+          eq(meals.id, favorites.mealId),
+          eq(favorites.userId, userId),
+          isNull(favorites.deletedAt),
+        ),
+      )
+      .orderBy(desc(totalFavoritesSubquery.totalFavorites))
+      .limit(3);
+  }
+
+  async getMealById(
+    mealId: number,
+    userId: number,
+  ): Promise<MealWithFavoriteInterface | null> {
+    const result = await this.db
+      .select({
+        ...getTableColumns(meals),
+        favoriteId: favorites.id,
+      })
+      .from(meals)
+      .leftJoin(
+        favorites,
+        and(
+          eq(meals.id, favorites.mealId),
+          eq(favorites.userId, userId),
+          isNull(favorites.deletedAt),
+        ),
+      )
+      .where(eq(meals.id, mealId))
+      .limit(1);
+
+    return result[0] ?? null;
   }
 }
