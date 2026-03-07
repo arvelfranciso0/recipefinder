@@ -53,6 +53,7 @@ export interface RecipeMealDetailsInterface {
   youtube: string | null;
   source: string | null;
   ingredients: IngredientItem[];
+  favoriteId: number | null;
   tags: string[];
 }
 
@@ -135,5 +136,10 @@ export interface MealInteface {
 }
 
 export interface MealWithFavoriteInterface extends MealInteface {
+  favoriteId: number | null;
+}
+
+export interface FeatureMealInterface extends MealInteface {
+  totalFavorites: number;
   favoriteId: number | null;
 }

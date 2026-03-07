@@ -8,12 +8,6 @@ import {
 } from "@/schemas/auth";
 import z from "zod";
 
-export type AuthContextType = {
-  session: string | undefined;
-  setSession: (session: string | undefined) => void;
-  isLoading: boolean;
-};
-
 export type LoginForm = z.infer<typeof LoginSchema>;
 export type ForgotPasswordForm = z.infer<typeof FortgotPasswordSchema>;
 export type NewPasswordForm = z.infer<typeof NewPasswordShcema>;

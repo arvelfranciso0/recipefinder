@@ -1,7 +1,4 @@
-import {
-  MealLableInterface,
-  verifyPasswordHashInterface,
-} from "@/interface/data-interface";
+import { verifyPasswordHashInterface } from "@/interface/data-interface";
 import { Schema } from "@/types/form-types";
 import { Url } from "next/dist/shared/lib/router/router";
 import crypto from "crypto";
@@ -11,7 +8,6 @@ import {
   IngredientItem,
   MealWithFavoriteInterface,
   RecipeMealDetailsInterface,
-  RecipeMealInterface,
   RecipeMealList,
 } from "@/interface/recipe-interface";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -26,43 +22,6 @@ export const getActiveClass = (pathname: string, path: Url): boolean => {
 export function capitalizeFirstLetter(str: string): string {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-export function validateSchema<T extends Record<string, any>>(
-  schema: Schema<T>,
-  body: any,
-):
-  | { data: T; valid: true }
-  | { errors: Record<keyof T, string>; valid: false } {
-  const errors: Partial<Record<keyof T, string>> = {};
-  const data: Partial<T> = {};
-
-  for (const key in schema) {
-    const validator = schema[key];
-    const value = body[key];
-
-    // Missing required field
-    if (value === undefined) {
-      errors[key as keyof T] = "Required field is missing";
-      continue;
-    }
-
-    const error = validator(value);
-    if (error) {
-      errors[key as keyof T] = error;
-    } else {
-      data[key as keyof T] = value;
-    }
-  }
-
-  const valid = Object.keys(errors).length === 0;
-
-  if (valid) {
-    // Now TS knows data is fully typed
-    return { data: data as T, valid: true };
-  } else {
-    return { errors: errors as Record<keyof T, string>, valid: false };
-  }
 }
 
 export async function verifyPasswordHash(
@@ -195,7 +154,7 @@ export function convertMeasurementToArray(meal: MealWithFavoriteInterface) {
     }
   }
 
-  return;
+  return measurements;
 }
 
 export async function mapMealDetail(
@@ -228,6 +187,7 @@ export async function mapMealDetail(
     source: meal.strSource,
     ingredients,
     tags: meal.strTags?.split(","),
+    favoriteId: null,
   };
 
   return data;
@@ -243,7 +203,7 @@ export const getYoutubeEmbedUrl = (url: string | null) => {
   return `https://www.youtube.com/embed/${videoId}`;
 };
 
-const parseInstructions = (text: string | null): string[] => {
+export const parseInstructions = (text: string | null): string[] => {
   if (!text) return [];
 
   const cleaned = text.replace(/\r/g, "");
@@ -264,13 +224,6 @@ const parseInstructions = (text: string | null): string[] => {
     .map((step) => step.trim())
     .filter(Boolean);
 };
-
-export function shuffleArray<T>(array: T[]): T[] {
-  return array
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-}
 
 export const updatePage = (
   newPage: number,

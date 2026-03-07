@@ -8,11 +8,6 @@ export type Errors<T> = Partial<Record<keyof T, string>>;
 
 export type Schema<T> = Record<keyof T, ValidatorFn<T[keyof T]>>;
 
-export type ResponseData = {
-  message: string;
-  status: number;
-};
-
 export type UseFormReturnType<T> = {
   values: T;
   errors: Partial<Record<keyof T, string>>;
