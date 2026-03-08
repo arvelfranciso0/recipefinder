@@ -1,4 +1,5 @@
 "use client";
+import FavoriteButton from "@/components/shared/favoriteButton";
 import Button from "@/components/ui/button";
 import { IngredientItem } from "@/interface/recipe-interface";
 import {
@@ -21,11 +22,19 @@ const RecipeHero = ({
   category,
   image,
   area,
+  isFavorite,
+  id,
+  meal,
+  favoriteId,
 }: {
   title: string;
   category: string;
   image: string;
   area: string;
+  isFavorite: boolean;
+  id: number;
+  meal: string;
+  favoriteId: number | null;
 }) => (
   <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden shadow-2xl mb-8 group">
     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent z-10" />
@@ -48,9 +57,12 @@ const RecipeHero = ({
       </h1>
     </div>
     <div className="absolute top-6 right-6 z-20">
-      <button className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-3 rounded-full hover:scale-110 transition-transform shadow-lg group">
-        <Heart className="w-6 h-6 text-primary  group-hover:fill-primary transition-all" />
-      </button>
+      <FavoriteButton
+        id={id}
+        meal={meal}
+        isFavorite={isFavorite}
+        favoriteId={favoriteId}
+      />
     </div>
   </div>
 );
@@ -106,7 +118,7 @@ const IngredientList = ({ ingredients }: { ingredients: IngredientItem[] }) => (
         {ingredients.map((ing, i) => (
           <li
             key={i}
-            className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-3 group"
+            className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-3 pr-3 group"
           >
             <div className="flex items-center gap-3">
               <div className="size-5 rounded-md border-2 border-primary/30 group-hover:border-primary transition-colors cursor-pointer flex items-center justify-center">

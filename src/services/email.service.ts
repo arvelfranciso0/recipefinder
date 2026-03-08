@@ -1,6 +1,8 @@
 import { EmailVerificationCode, ForgotPasswordLink } from "@/types/email-types";
 import nodemailer from "nodemailer";
 
+const APP_URL = process.env.APP_URL;
+
 export function sendEmailVerification(email: EmailVerificationCode) {
   return new Promise(async (resolve, reject) => {
     const tranpoter = nodemailer.createTransport({
@@ -81,7 +83,7 @@ export function sendEmailVerification(email: EmailVerificationCode) {
               <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                   <td align="center">
-                    <a href="http://localhost:3000/verify/${email.idToken}" target="_blank" style="display: inline-block; background-color: #65a338; color: #ffffff; font-size: 16px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(101, 163, 56, 0.2);">
+                    <a href="${APP_URL}verify/${email.idToken}" target="_blank" style="display: inline-block; background-color: #65a338; color: #ffffff; font-size: 16px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(101, 163, 56, 0.2);">
                       Return to Verification
                     </a>
                   </td>

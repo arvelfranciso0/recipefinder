@@ -23,14 +23,14 @@ export default function Navbar() {
               Recipe<span className="text-primary">Finder</span>
             </h1>
           </Link>
-          <div className="hidden md:block w-full">
+          {/* <div className="hidden md:block w-full">
             <InputField
-              placeholder="Search ingredients..."
+              placeholder="Search meal..."
               className="w-100 border-none" // Clean up internal borders
               icon={Search}
               id="searchIngredients"
             />
-          </div>
+          </div> */}
         </div>
         {/* Center/Right Section: Navigation */}
         <nav className="flex items-center gap-4 lg:gap-8">
@@ -42,10 +42,10 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              href="/recipe"
-              className={`${getActiveClass(pathname, "/recipe") ? "text-primary" : "text-foreground  hover:text-primary"} `}
+              href="/meal"
+              className={`${getActiveClass(pathname, "/meal") ? "text-primary" : "text-foreground  hover:text-primary"} `}
             >
-              Recipes
+              Meals
             </Link>
             <Link
               href={`/favorites`}

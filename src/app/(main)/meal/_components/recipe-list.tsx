@@ -37,17 +37,10 @@ export default function RecipeList({
   const mealArea = searchParams.get("area") ?? "";
   const page = searchParams.get("page") ?? "1";
   const [isPending, startTransition] = useTransition();
-  const handleCategoryChange = (
-    value: string | null,
-    type: "category" | "area",
-  ) => {
+  const handleCategoryChange = (value: string, type: "category" | "area") => {
     const params = new URLSearchParams(window.location.search);
 
-    if (value === null || value === "") {
-      params.delete(type);
-    } else {
-      params.set(type, value);
-    }
+    params.set(type, value);
 
     params.set("page", "1");
     startTransition(() => {
@@ -62,7 +55,7 @@ export default function RecipeList({
           Home
         </Link>
         <ChevronRight />
-        <span className="font-medium">Recipes</span>
+        <span className="font-medium">Meals</span>
       </nav>
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div className="max-w-2xl">
@@ -78,23 +71,43 @@ export default function RecipeList({
       </div>
 
       {/* Filters Container */}
+      {/* Filters Container */}
       <div className="flex flex-col gap-6 mb-10">
-        {/* Stack select and tags on mobile, row on tablet+ */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="w-full sm:w-auto">
-            <CustomSelect
-              options={categoriesData}
-              defaultValue={capitalizeFirstLetter(category)}
-              onSelect={(val) => handleCategoryChange(val, "category")}
-            />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          {/* Left Side: Selectors */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full sm:w-auto">
+            <div className="w-full sm:w-56">
+              <CustomSelect
+                options={categoriesData}
+                defaultValue={capitalizeFirstLetter(category)}
+                onSelect={(val) => handleCategoryChange(val, "category")}
+              />
+            </div>
+            <div className="w-full sm:w-56">
+              <CustomSelect
+                options={mealsArea}
+                defaultValue={capitalizeFirstLetter(mealArea)}
+                onSelect={(val) => handleCategoryChange(val, "area")}
+              />
+            </div>
           </div>
-          <div className="w-full sm:w-auto">
-            <CustomSelect
-              options={mealsArea}
-              defaultValue={capitalizeFirstLetter(mealArea)}
-              onSelect={(val) => handleCategoryChange(val, "area")}
-            />
-          </div>
+
+          {/* Right Side: Action Button */}
+          {(category !== "" || mealArea !== "") && (
+            <Button
+              onClick={() => router.push(pathname)}
+              variant="outline"
+              className="group flex items-center gap-2  "
+            >
+              <RotateCcw
+                size={16}
+                className="group-hover:-rotate-45 transition-transform"
+              />
+              <span className="text-sm font-bold tracking-tight">
+                Clear Filters
+              </span>
+            </Button>
+          )}
         </div>
       </div>
       {isPending ? (
@@ -136,19 +149,22 @@ export default function RecipeList({
                 No Recipes Found
               </h3>
 
-              <p className="text-muted max-w-xs mb-8 font-medium">
-                We couldn't find any recipes matching your current filters. Try
-                adjusting your category or area.
-              </p>
-
-              <Button
-                onClick={() => router.push(pathname)}
-                variant="outline"
-                className="flex items-center gap-2 border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-2xl px-8"
-              >
-                <RotateCcw size={18} />
-                Clear All Filters
-              </Button>
+              {(category || mealArea) && (
+                <>
+                  <p className="text-muted max-w-xs mb-8 font-medium">
+                    We couldn't find any recipes matching your current filters.
+                    Try adjusting your category or area.
+                  </p>
+                  <Button
+                    onClick={() => router.push(pathname)}
+                    variant="outline"
+                    className="flex items-center gap-2 border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-2xl px-8"
+                  >
+                    <RotateCcw size={18} />
+                    Clear All Filters
+                  </Button>
+                </>
+              )}
             </div>
           )}
         </>

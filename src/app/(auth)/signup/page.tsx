@@ -40,7 +40,7 @@ export default function SignupPage() {
 
     if (result.code == "ER_DUP_ENTRY") {
       setError("email", {
-        message: "This email is already registered. Try signing in. ",
+        message: "This email is already registered.",
       });
     } else {
       setShowAlert(true);

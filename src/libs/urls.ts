@@ -1,40 +1,6 @@
 import { sideNavbarInterface, UrlInterface } from "@/interface/url-interface";
 import { Bell, Settings, Sliders, User } from "lucide-react";
 
-export const Urls: UrlInterface[] = [
-  {
-    id: "home",
-    label: "Home",
-    href: "/",
-    requiresAuth: true,
-    guestOnly: true,
-  },
-  {
-    id: "recipe",
-    label: "Recipes",
-    href: "/recipe",
-    requiresAuth: true,
-  },
-  {
-    id: "favorites",
-    label: "Favorites",
-    href: "/favorites",
-    requiresAuth: true,
-  },
-  {
-    id: "login",
-    label: "Log In",
-    href: "/login",
-    guestOnly: true,
-  },
-  {
-    id: "signup",
-    label: "Sign Up",
-    href: "/signup",
-    guestOnly: true,
-  },
-];
-
 export const QuickLinks: UrlInterface[] = [
   {
     id: "home",

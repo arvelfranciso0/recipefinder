@@ -6,13 +6,26 @@ import {
 } from "../_components/recipe-details";
 import { TheMealDbApiService } from "@/services/meal.service";
 import { getYoutubeEmbedUrl, mapMealDetail } from "@/libs/utils";
+import { getRecipeByMealId } from "./server";
+import RecipeNotFound from "../_components/recipe-not-found";
+import InvalidRecipeId from "../_components/recipe-invalid-id";
 
-export default async function RecipeDetailPage(
-  props: PageProps<"/recipe/[id]">,
-) {
+export default async function RecipeDetailPage(props: PageProps<"/meal/[id]">) {
   const { id } = await props.params;
-  const recipeDetailsResult = await TheMealDbApiService.lookupMealById(id);
-  const mapResultRecipeDetails = await mapMealDetail(recipeDetailsResult[0]);
+  const recipeId = Number(id);
+
+  console.log("Received meal ID:", id);
+
+  if (isNaN(recipeId)) {
+    return <InvalidRecipeId />;
+  }
+
+  const mapResultRecipeDetails = await getRecipeByMealId(recipeId);
+
+  if (!mapResultRecipeDetails) {
+    return <RecipeNotFound />;
+  }
+
   const embedUrl = getYoutubeEmbedUrl(mapResultRecipeDetails.youtube);
 
   return (
@@ -22,6 +35,10 @@ export default async function RecipeDetailPage(
         category={mapResultRecipeDetails.category ?? "Unknown"}
         image={mapResultRecipeDetails.image ?? ""}
         area={mapResultRecipeDetails.area ?? "Unknown"}
+        isFavorite={!!mapResultRecipeDetails.favoriteId}
+        id={mapResultRecipeDetails.id}
+        meal={mapResultRecipeDetails.name}
+        favoriteId={mapResultRecipeDetails.favoriteId}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">

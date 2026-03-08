@@ -17,7 +17,7 @@ export default function CategoryItem({
   label,
 }: CategoryItemProps) {
   return (
-    <Link href={`/recipe?category=${label.toLowerCase()}`}>
+    <Link href={`/meal?category=${label.toLowerCase()}`}>
       <div className="flex-none w-32 group cursor-pointer">
         <div
           className={`h-32 rounded-3xl ${bgClass} flex items-center justify-center transition-transform group-hover:-translate-y-2`}

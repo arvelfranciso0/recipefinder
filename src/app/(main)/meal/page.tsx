@@ -6,6 +6,7 @@ interface RecipePageProps {
     category?: string;
     area?: string;
     page?: string;
+    ingredient?: string;
   }>;
 }
 
@@ -16,6 +17,7 @@ export default async function RecipePage({ searchParams }: RecipePageProps) {
     category: params.category,
     page: Number(params.page) || 1,
     area: params.area,
+    ingredient: params.ingredient,
   });
 
   return <RecipeList recipes={recipes} totalRecipes={totalRecipes} />;
