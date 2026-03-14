@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { favorites, meals } from "@/db/schema";
 import { FavoriteInterface } from "@/interface/favorite-interface";
 import { FavoriteCounts, FavoriteType } from "@/types/favorite-type";
+import { MealType } from "@/types/recipe-types";
 import {
   and,
   asc,
@@ -66,6 +67,7 @@ export class FavoriteRepository {
     userId: number,
     limit: number,
     offset: number,
+    mealType: MealType,
     category?: string,
     ingredient?: string,
     sortBy?: string,
@@ -83,6 +85,7 @@ export class FavoriteRepository {
           eq(favorites.userId, userId),
           isNull(favorites.deletedAt),
           and(
+            mealType != "" ? eq(favorites.mealType, mealType) : undefined,
             category ? eq(meals.category, category) : undefined,
             ingredient
               ? or(

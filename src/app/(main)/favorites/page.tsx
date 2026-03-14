@@ -1,3 +1,4 @@
+import { MealType } from "@/types/recipe-types";
 import FavoritesList from "./_components/favorite-list";
 import NoFavoritesFound from "./_components/no-favorite-found";
 import { getFavoriteMealsByAuthUser } from "./server";
@@ -8,6 +9,7 @@ interface RecipePageProps {
     page?: string;
     ingredient?: string;
     sortBy?: string;
+    mealType: MealType;
   }>;
 }
 export default async function FavoritesPage({ searchParams }: RecipePageProps) {
@@ -23,6 +25,7 @@ export default async function FavoritesPage({ searchParams }: RecipePageProps) {
     ingredient: params.ingredient || "",
     category: params.category || "",
     sortBy: params.sortBy,
+    mealType: params.mealType || "",
   });
 
   if (favoriteMeals.length === 0) {
