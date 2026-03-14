@@ -8,6 +8,7 @@ import {
   IngredientItem,
   MealWithFavoriteInterface,
   RecipeMealDetailsInterface,
+  RecipeMealInterface,
   RecipeMealList,
 } from "@/interface/recipe-interface";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -318,4 +319,21 @@ export const getAllMealIds = async (
   }
 
   return resolveMealIds(category, area, mealCategoryIds, mealAreaIds);
+};
+
+export const mealWithFavoriteToDTO = (
+  meal: MealWithFavoriteInterface,
+): RecipeMealInterface => {
+  const mapResultRecipeDetails = convertIngredientsToArray(meal);
+  return {
+    id: meal.id as number,
+    meal: meal.name ?? "",
+    imageURL: meal.thumbnail ?? "",
+    area: meal.area ?? "",
+    tags: meal.tags?.split(",") ?? [],
+    isFavorite: meal.favoriteId !== null,
+    favoriteId: meal.favoriteId ?? null,
+    category: meal.category ?? "",
+    ingredients: mapResultRecipeDetails,
+  };
 };

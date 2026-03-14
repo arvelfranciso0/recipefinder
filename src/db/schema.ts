@@ -11,6 +11,8 @@ import {
 
 export const UserType = ["USER", "ADMIN", "MODERATOR"] as const;
 export const VerificationType = ["EMAIL", "FORGOT_PASSWORD"] as const;
+
+export const MealType = ["breakfast", "lunch", "dinner"] as const;
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
   email: varchar("email", { length: 100 }).notNull().unique(),
@@ -39,7 +41,7 @@ export const favorites = mysqlTable("favorites", {
   mealId: int("meal_id")
     .references(() => meals.id)
     .notNull(),
-  mealName: text("meal_name"),
+  mealType: mysqlEnum("meal_type", MealType),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

@@ -1,5 +1,6 @@
 "use client";
 import FavoriteButton from "@/components/shared/favoriteButton";
+import MealSelectionModal from "@/components/shared/mealSelectModal";
 import Button from "@/components/ui/button";
 import { IngredientItem } from "@/interface/recipe-interface";
 import {
@@ -15,6 +16,7 @@ import {
   Printer,
   Download,
 } from "lucide-react";
+import { useState } from "react";
 
 // --- Sub-component: Hero Section ---
 const RecipeHero = ({
@@ -35,37 +37,84 @@ const RecipeHero = ({
   id: number;
   meal: string;
   favoriteId: number | null;
-}) => (
-  <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden shadow-2xl mb-8 group">
-    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent z-10" />
-    <img
-      src={image}
-      alt={title}
-      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-    />
-    <div className="absolute bottom-8 left-8 z-20 text-primary-foreground">
-      <div className="flex gap-2 mb-3">
-        <span className="bg-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          {category}
-        </span>
-        <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-          {area}
-        </span>
-      </div>
-      <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
-        {title}
-      </h1>
-    </div>
-    <div className="absolute top-6 right-6 z-20">
-      <FavoriteButton
-        id={id}
-        meal={meal}
-        isFavorite={isFavorite}
-        favoriteId={favoriteId}
+}) => {
+  const [favoriteData, setFavoriteData] = useState<{
+    favoriteId: number;
+    isFavorite: boolean;
+    mealName: string;
+    mealId: number;
+  }>({ favoriteId: 0, isFavorite: false, mealName: "", mealId: 0 });
+  const [selectionModalOpen, setSelectionModalOpen] = useState(false);
+
+  const handleShowMealModal = async (
+    e: React.MouseEvent,
+    favoriteId: number | null,
+    isFavorite?: boolean,
+    mealName?: string,
+    mealId?: number,
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setSelectionModalOpen(true);
+    setFavoriteData({
+      favoriteId: favoriteId as number,
+      mealId: mealId as number,
+      isFavorite: isFavorite as boolean,
+      mealName: mealName as string,
+    });
+  };
+
+  return (
+    <>
+      <MealSelectionModal
+        isOpen={selectionModalOpen}
+        onClose={() => setSelectionModalOpen(false)}
+        favoriteId={favoriteData.favoriteId}
+        isFavorite={favoriteData.isFavorite}
+        mealName={favoriteData.mealName}
+        mealId={favoriteData.mealId}
       />
-    </div>
-  </div>
-);
+      <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden shadow-2xl mb-8 group">
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent z-10" />
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute bottom-8 left-8 z-20 text-primary-foreground">
+          <div className="flex gap-2 mb-3">
+            <span className="bg-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              {category}
+            </span>
+            <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              {area}
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
+            {title}
+          </h1>
+        </div>
+        <div className="absolute top-6 right-6 z-20">
+          <button
+            onClick={(e) =>
+              handleShowMealModal(e, favoriteId, isFavorite, meal, id)
+            }
+            className="absolute cursor-pointer  top-3 right-3 bg-white/90 dark:bg-background/90 backdrop-blur-md p-2 rounded-full hover:scale-110 active:scale-90 transition-all shadow-sm z-20"
+          >
+            <Heart
+              className={`w-5 h-5 transition-colors duration-300 ${
+                isFavorite
+                  ? "text-primary fill-primary hover:fill-transparent"
+                  : "text-muted fill-transparent hover:fill-primary hover:text-primary"
+              }`}
+            />
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
 
 // --- Sub-component: Stats ---
 const RecipeStats = () => (

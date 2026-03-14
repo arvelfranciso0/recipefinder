@@ -24,9 +24,9 @@ const Toast = ({ id, message, type = "success", onClose }: ToastProps) => {
   };
 
   return (
-    <div className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-xl shadow-xl animate-in fade-in slide-in-from-right-5 min-w-[300px]">
+    <div className="flex items-center gap-3 bg-background border border-primary p-4 rounded-xl shadow-xl animate-in fade-in slide-in-from-right-5 min-w-75">
       <div className="shrink-0">{icons[type]}</div>
-      <p className="flex-1 text-sm font-bold text-charcoal">{message}</p>
+      <p className="flex-1 text-sm font-bold text-foreground">{message}</p>
       <button
         onClick={() => onClose(id)}
         className="text-muted hover:text-charcoal transition-colors"

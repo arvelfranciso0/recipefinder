@@ -1,0 +1,1 @@
+ALTER TABLE `favorites` ADD `meal_type` enum('breakfast','lunch','dinner');

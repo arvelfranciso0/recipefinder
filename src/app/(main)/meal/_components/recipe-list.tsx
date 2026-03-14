@@ -22,6 +22,8 @@ import { MealCardSkeleton } from "@/components/shared/mealCardSkeleton";
 import Button from "@/components/ui/button";
 import { MealListingGrid } from "./meal-listing-grid";
 import { useState, useTransition } from "react";
+import MealSelectionModal from "@/components/shared/mealSelectModal";
+import { useToast } from "@/context/toastContext";
 
 export default function RecipeList({
   totalRecipes,

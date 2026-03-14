@@ -1,0 +1,1 @@
+ALTER TABLE `favorites` DROP COLUMN `meal_name`;

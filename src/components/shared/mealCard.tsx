@@ -17,6 +17,7 @@ export default function MealCard({
   area,
   category,
   tags = [],
+  handleShowMealModal,
 }: MealCardInterface) {
   return (
     <Link href={`/meal/${id}`} className="block group">
@@ -28,12 +29,27 @@ export default function MealCard({
             style={{ backgroundImage: `url('${imageURL}')` }}
           />
 
-          <FavoriteButton
+          {/* <FavoriteButton
             id={id}
             meal={meal}
             isFavorite={isFavorite}
             favoriteId={favoriteId}
-          />
+          /> */}
+
+          <button
+            onClick={(e) =>
+              handleShowMealModal(e, favoriteId, isFavorite, meal, id)
+            }
+            className="absolute cursor-pointer  top-3 right-3 bg-white/90 dark:bg-background/90 backdrop-blur-md p-2 rounded-full hover:scale-110 active:scale-90 transition-all shadow-sm z-20"
+          >
+            <Heart
+              className={`w-5 h-5 transition-colors duration-300 ${
+                isFavorite
+                  ? "text-primary fill-primary hover:fill-transparent"
+                  : "text-muted fill-transparent hover:fill-primary hover:text-primary"
+              }`}
+            />
+          </button>
         </div>
 
         {/* Content Section */}
