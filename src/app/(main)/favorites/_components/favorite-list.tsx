@@ -67,6 +67,7 @@ export default function FavoritesList({
   const pathname = usePathname();
   const sortBy = searchParams.get("sortBy") ?? "newest";
   const page = searchParams.get("page") ?? "1";
+  const mealType = searchParams.get("mealType") ?? "";
   const [favoriteData, setFavoriteData] = useState<{
     favoriteId: number;
     isFavorite: boolean;
@@ -74,7 +75,7 @@ export default function FavoritesList({
     mealId: number;
   }>({ favoriteId: 0, isFavorite: false, mealName: "", mealId: 0 });
 
-  const handleCategoryChange = (value: string, type: "sortBy") => {
+  const handleCategoryChange = (value: string, type: "sortBy" | "mealType") => {
     const params = new URLSearchParams(window.location.search);
 
     params.set(type, value);
@@ -163,32 +164,34 @@ export default function FavoritesList({
                 count={dinnerCount + breakfastCount + lunchCount}
                 icon={Utensils}
                 id={"all-recipes"}
-                isActive={false}
-                onSetActive={() => console.log("Set active:", "all-recipes")}
+                isActive={mealType === ""}
+                onSetActive={() => handleCategoryChange("", "mealType")}
               />
               <SidebarItem
                 label={"Breakfast"}
                 count={breakfastCount}
                 icon={EggFried}
                 id={"breakfast"}
-                isActive={false}
-                onSetActive={() => console.log("Set active:", "breakfast")}
+                isActive={mealType === "breakfast"}
+                onSetActive={() =>
+                  handleCategoryChange("breakfast", "mealType")
+                }
               />
               <SidebarItem
                 label={"Lunch"}
                 count={lunchCount}
                 icon={Hamburger}
                 id={"lunch"}
-                isActive={false}
-                onSetActive={() => console.log("Set active:", "lunch")}
+                isActive={mealType === "lunch"}
+                onSetActive={() => handleCategoryChange("lunch", "mealType")}
               />
               <SidebarItem
                 label={"Dinner"}
                 count={dinnerCount}
                 icon={Utensils}
-                id={"Beef"}
-                isActive={false}
-                onSetActive={() => console.log("Set active:", "dinner")}
+                id={"dinner"}
+                isActive={mealType === "dinner"}
+                onSetActive={() => handleCategoryChange("dinner", "mealType")}
               />
             </div>
           </div>
@@ -243,13 +246,6 @@ export default function FavoritesList({
                 onClick={() => handleCategoryChange("oldest", "sortBy")}
               >
                 Oldest
-              </Checkbox>
-              <Checkbox
-                id="highest-rated"
-                checked={sortBy === "highest-rated"}
-                onClick={() => handleCategoryChange("highest-rated", "sortBy")}
-              >
-                Highest Rated
               </Checkbox>
             </div>
           </div>

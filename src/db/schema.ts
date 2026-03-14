@@ -12,7 +12,7 @@ import {
 export const UserType = ["USER", "ADMIN", "MODERATOR"] as const;
 export const VerificationType = ["EMAIL", "FORGOT_PASSWORD"] as const;
 
-export const MealType = ["breakfast", "lunch", "dinner"] as const;
+export const MealType = ["breakfast", "lunch", "dinner", ""] as const;
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
   email: varchar("email", { length: 100 }).notNull().unique(),

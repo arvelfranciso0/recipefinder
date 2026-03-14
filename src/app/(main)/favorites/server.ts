@@ -3,6 +3,7 @@ import { RecipeMealInterface } from "@/interface/recipe-interface";
 import { mealWithFavoriteToDTO } from "@/libs/utils";
 import { FavoriteRepository } from "@/repository/favorite";
 import { AuthService } from "@/services/auth.service";
+import { MealType } from "@/types/recipe-types";
 
 interface GetFavoriteMealsByAuthUserResponse {
   favoriteMeals: RecipeMealInterface[];
@@ -17,12 +18,14 @@ export async function getFavoriteMealsByAuthUser({
   category = "",
   ingredient = "",
   sortBy = "",
+  mealType = "",
 }: {
   page?: number;
   limit?: number;
   category?: string;
   ingredient?: string;
   sortBy?: string;
+  mealType: MealType;
 }): Promise<GetFavoriteMealsByAuthUserResponse> {
   const authUser = new AuthService();
   const favoriteRepository = new FavoriteRepository();
@@ -43,6 +46,7 @@ export async function getFavoriteMealsByAuthUser({
         user.id,
         limit,
         offset,
+        mealType,
         category,
         ingredient,
         sortBy,
