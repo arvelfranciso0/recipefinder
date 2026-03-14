@@ -1,3 +1,5 @@
+import { MealType } from "@/types/recipe-types";
+
 export interface ApiMeal {
   idMeal: string;
   strMeal: string;
@@ -73,6 +75,13 @@ export type RecipeMealList = RecipeMealInterface[];
 
 export interface MealCardInterface extends RecipeMealInterface {
   handleFavorite?: (e: React.MouseEvent) => void;
+  handleShowMealModal: (
+    e: React.MouseEvent,
+    favoriteId: number | null,
+    isFavorite?: boolean,
+    mealName?: string,
+    mealId?: number,
+  ) => void;
   isPending?: boolean;
 }
 

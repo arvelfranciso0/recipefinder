@@ -7,7 +7,7 @@ function ProtectedWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="max-w-7xl mx-auto md:px-10 px-3 pb-20 py-8">
+      <main className="max-w-7xl min-h-screen mx-auto md:px-10 px-3 pb-20 py-8">
         {children}
       </main>
       <Footer />

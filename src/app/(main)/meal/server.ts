@@ -17,6 +17,7 @@ import {
   getAllMealsByCategory,
   getPaginatedIds,
   mapMealDetail,
+  mealWithFavoriteToDTO,
   resolveMealIds,
 } from "@/libs/utils";
 import { MealRepository } from "@/repository/meal";
@@ -58,19 +59,7 @@ export async function getRecipes({
 
     const result: RecipeMealList = mealWithFavorites.map(
       (value: MealWithFavoriteInterface) => {
-        const mapResultRecipeDetails = convertIngredientsToArray(value);
-
-        return {
-          id: value.id as number,
-          meal: value.name ?? "",
-          imageURL: value.thumbnail ?? "",
-          area: value.area ?? "",
-          tags: value.tags?.split(",") ?? [],
-          isFavorite: value.favoriteId !== null,
-          favoriteId: value.favoriteId ?? null,
-          category: value.category ?? "",
-          ingredients: mapResultRecipeDetails,
-        };
+        return mealWithFavoriteToDTO(value);
       },
     );
 
