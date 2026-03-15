@@ -94,31 +94,32 @@ export default function AccountSettings() {
             className="grid gap-6 animate-in slide-in-from-top-4 duration-300"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label
-                  className="text-sm font-bold text-foreground ml-1"
-                  htmlFor="current-password"
-                >
-                  Current Password
-                </label>
-                <Button
-                  variant="ghost"
+            <div className="space-y-2 ">
+              <label
+                className="text-sm font-bold text-foreground ml-1"
+                htmlFor="current-password"
+              >
+                Current Password
+              </label>
+              <div className="relative mt-2">
+                <InputField
+                  id="currentPassword"
+                  type={showPasswords ? "text" : "password"}
+                  placeholder="••••••••"
+                  icon={Lock}
+                  className="w-full pr-13"
+                  {...register("currentPassword")}
+                />
+
+                <button
                   type="button"
                   onClick={() => setShowPasswords(!showPasswords)}
-                  className="text-xs "
+                  className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                 >
                   {showPasswords ? <Eye /> : <EyeOff />}
-                </Button>
+                </button>
               </div>
-              <InputField
-                id="currentPassword"
-                type={showPasswords ? "text" : "password"}
-                placeholder="••••••••"
-                icon={Lock}
-                className="w-full"
-                {...register("currentPassword")}
-              />
+
               {errors.currentPassword && (
                 <p className="text-red-500 text-xs mt-3 pl-2">
                   {errors.currentPassword.message}
@@ -129,19 +130,28 @@ export default function AccountSettings() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label
-                  className="text-sm font-bold text-foreground ml-1"
-                  htmlFor="new-password"
+                  className="text-sm font-bold text-foreground ml-1 "
+                  htmlFor="newPassword"
                 >
                   New Password
                 </label>
-                <InputField
-                  id="newPassword"
-                  type={showPasswords ? "text" : "password"}
-                  placeholder="••••••••"
-                  icon={Lock}
-                  className="w-full"
-                  {...register("newPassword")}
-                />
+                <div className="relative mt-2">
+                  <InputField
+                    id="newPassword"
+                    type={showPasswords ? "text" : "password"}
+                    placeholder="••••••••"
+                    icon={Lock}
+                    className="w-full pr-13"
+                    {...register("newPassword")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswords(!showPasswords)}
+                    className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+                  >
+                    {showPasswords ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
                 {errors.newPassword && (
                   <p className="text-red-500 text-xs mt-3 pl-2">
                     {errors.newPassword.message}
@@ -150,19 +160,28 @@ export default function AccountSettings() {
               </div>
               <div className="space-y-2">
                 <label
-                  className="text-sm font-bold text-foreground ml-1"
-                  htmlFor="confirm-new-password"
+                  className="text-sm font-bold text-foreground ml-1 "
+                  htmlFor="confirmNewPassword"
                 >
                   Confirm New Password
                 </label>
-                <InputField
-                  id="confirmNewPassword"
-                  type={showPasswords ? "text" : "password"}
-                  placeholder="••••••••"
-                  icon={Lock}
-                  className="w-full"
-                  {...register("confirmNewPassword")}
-                />
+                <div className="relative mt-2">
+                  <InputField
+                    id="confirmNewPassword"
+                    type={showPasswords ? "text" : "password"}
+                    placeholder="••••••••"
+                    icon={Lock}
+                    className="w-full pr-13"
+                    {...register("confirmNewPassword")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswords(!showPasswords)}
+                    className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
+                  >
+                    {showPasswords ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
                 {errors.confirmNewPassword && (
                   <p className="text-red-500 text-xs mt-3 pl-2">
                     {errors.confirmNewPassword.message}

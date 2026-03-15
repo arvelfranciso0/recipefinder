@@ -15,7 +15,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
 
     // Define base styles for the input
     const baseInputStyles =
-      " pr-4 py-3.5 rounded-xl border border-gray-200 bg-background transition-all outline-none text-sm focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-muted/40";
+      " pr-4 py-3.5 rounded-xl border border-gray-200 bg-background transition-all outline-none text-sm focus:border-primary focus:ring-4 focus:ring-primary/10 placeholder:text-muted/40 truncate";
 
     // Logic for conditional padding based on icon presence
     const paddingStyles = Icon ? "pl-12" : "pl-4";

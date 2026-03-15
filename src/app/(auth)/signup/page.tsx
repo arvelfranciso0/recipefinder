@@ -224,7 +224,7 @@ export default function SignupPage() {
                     minLength={8}
                     placeholder="••••••••"
                     icon={Lock}
-                    className="w-full"
+                    className="w-full pr-13 "
                   />
 
                   <button
@@ -260,7 +260,7 @@ export default function SignupPage() {
                     minLength={8}
                     placeholder="••••••••"
                     icon={Lock}
-                    className="w-full"
+                    className="w-full pr-13 "
                   />
 
                   <button

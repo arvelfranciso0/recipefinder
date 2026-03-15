@@ -178,7 +178,7 @@ export default function LoginPage() {
                     {...register("password")}
                     placeholder="••••••••"
                     icon={Lock}
-                    className="w-full"
+                    className="w-full pr-13 "
                     name="password"
                     type={showPassword ? "text" : "password"}
                   />
