@@ -31,6 +31,8 @@ export async function getUserSettingByUserId(userId: number) {
       isEmailVerified: users.isEmailVerified,
       fullName: users.fullName,
       theme: settings.theme,
+      bio: users.bio,
+      birthday: users.birthdate,
     })
     .from(users)
     .leftJoin(settings, eq(users.id, settings.userId))
@@ -40,7 +42,25 @@ export async function getUserSettingByUserId(userId: number) {
   return user;
 }
 
+export async function updateUserInformation(
+  userId: number,
+  bio: string | null,
+  birthdate: string | null,
+  fullName?: string,
+) {
+  return await db
+    .update(users)
+    .set({
+      fullName,
+      birthdate,
+      bio,
+    })
+    .where(eq(users.id, userId));
+}
+
 export default {
   findByEmail,
   findByUserId,
+  getUserSettingByUserId,
+  updateUserInformation,
 };
