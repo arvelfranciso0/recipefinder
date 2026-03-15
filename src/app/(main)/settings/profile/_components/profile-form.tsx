@@ -134,7 +134,7 @@ export function ProfileForm({
             className="block text-sm font-bold text-foreground mb-2"
             htmlFor="fullname"
           >
-            Full Name
+            Fullname
           </label>
           <InputField
             id="fullname"
@@ -169,10 +169,10 @@ export function ProfileForm({
             {/* Read-Only Age Display */}
             <div className="flex-1 min-w-20">
               <div
-                className="h-13 flex flex-col items-center justify-center rounded-2xl border border-muted/10 bg-muted/5 shadow-inner group transition-colors"
+                className="h-13 flex flex-col items-center justify-center rounded-2xl border border-muted/10 bg-muted/5 group transition-colors"
                 title="Age is calculated automatically"
               >
-                <span className="text-[9px] font-black uppercase tracking-tighter text-muted/50 leading-none mb-1">
+                <span className="text-xs font-black uppercase tracking-tighter text-muted/50 leading-none mb-1">
                   Age
                 </span>
                 <span className="text-lg font-black text-foreground leading-none">
