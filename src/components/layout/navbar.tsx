@@ -6,9 +6,11 @@ import { ChefHat } from "@components/icons/chef-hat";
 import { usePathname } from "next/navigation";
 import { InputField } from "../ui/input";
 import { getActiveClass } from "@/libs/utils";
+import { useAuth } from "@/providers/auth/providers";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md ">
@@ -59,11 +61,19 @@ export default function Navbar() {
           <div className="flex items-center gap-3 border-l  pl-6">
             <Link href={"/settings/profile"}>
               <div className="size-10 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden cursor-pointer hover:border-primary transition-colors">
-                <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCenLArdCyyjE8adbWVx93RLRZPNw7uG4HbYOXZxGvro5Rc8y_wefDHOEQ9ZK4AIDL3urC5Y0ez0M-VB9Viota7Wthxq1_rZggI5Wues1UNuseJOoOuvLp-blmzyDEud45RwJiRxSSrVgVQVdIw8L0ppUQ_0Q4OcxaBFP5jxH-pd34CU51l5e3oPjjz2FO6nfNKFETr76H6FZp5K9UPf_W_NZO6dm2PJ7hYtDMr5-sc19mH0x6HqFP7S-vbyzPAmhVzMsbJXBua_6mo"
-                  alt="User Profile"
-                  className="w-full h-full object-cover rounded-full"
-                />
+                {user?.avatarUrl ? (
+                  <img
+                    src={user.avatarUrl}
+                    alt="User Profile"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCenLArdCyyjE8adbWVx93RLRZPNw7uG4HbYOXZxGvro5Rc8y_wefDHOEQ9ZK4AIDL3urC5Y0ez0M-VB9Viota7Wthxq1_rZggI5Wues1UNuseJOoOuvLp-blmzyDEud45RwJiRxSSrVgVQVdIw8L0ppUQ_0Q4OcxaBFP5jxH-pd34CU51l5e3oPjjz2FO6nfNKFETr76H6FZp5K9UPf_W_NZO6dm2PJ7hYtDMr5-sc19mH0x6HqFP7S-vbyzPAmhVzMsbJXBua_6mo"
+                    alt="User Profile"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                )}
               </div>
             </Link>
           </div>

@@ -1,14 +1,17 @@
+"use client";
+
 import Button from "@/components/ui/button";
 import { ProfileForm } from "./_components/profile-form";
 import { ThemeSelector } from "@/components/shared/themeSelector";
 import { getUserProfile } from "./server";
 import { ArrowRight, LockKeyhole, UserCircle } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/providers/auth/providers";
 
-export default async function ProfilePage() {
-  const userProfile = await getUserProfile();
+export default function ProfilePage() {
+  const { user } = useAuth();
 
-  if (!userProfile) {
+  if (!user) {
     return (
       <section className="flex-1 flex flex-col items-center justify-center py-20 px-6 bg-white dark:bg-white/5 border border-dashed border-muted/30 rounded-[3rem] text-center">
         <div className="relative mb-6">
@@ -50,9 +53,11 @@ export default async function ProfilePage() {
       </div>
 
       <ProfileForm
-        fullName={userProfile.fullName}
-        birthdate={userProfile.birthday}
-        bio={userProfile.bio}
+        fullName={user.fullName}
+        birthdate={user.birthday ?? ""}
+        bio={user.bio ?? ""}
+        email={user.email}
+        avatarUrl={user.avatarUrl}
       />
       <ThemeSelector />
     </section>

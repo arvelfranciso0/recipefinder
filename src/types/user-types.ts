@@ -9,6 +9,9 @@ export type User = {
   fullName: string;
   role: UserRoleType;
   isEmailVerified: boolean | null;
+  avatarUrl?: string | null;
+  birthday?: string | null;
+  bio?: string | null;
 };
 
 export type UserDetails = User & {

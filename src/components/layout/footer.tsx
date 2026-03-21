@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className=" dark:bg-transparent border-t border-gray-100 dark:border-white/10 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 mb-12">
           <div className="col-span-2 md:col-span-1">
             <Link href="#" className="flex items-center gap-2 mb-6">
               <ChefHat />
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           {/* Socials */}
-          <div>
+          {/* <div>
             <h5 className="font-bold text-sm uppercase tracking-widest mb-6 dark:text-muted">
               Follow Us
             </h5>
@@ -76,10 +76,10 @@ export default function Footer() {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
 
-        <div className="pt-8 border-t border-primary-foreground flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-semibold text-muted">
+        {/* <div className="pt-8 border-t border-primary-foreground flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-semibold text-muted">
           <p>© 2024 RecipeFinder. All rights reserved.</p>
           <div className="flex gap-8">
             <Link href="#" className="hover:text-primary">
@@ -92,7 +92,7 @@ export default function Footer() {
               Contact
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

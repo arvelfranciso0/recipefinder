@@ -34,6 +34,7 @@ export async function getUserSettingByUserId(userId: number) {
       theme: settings.theme,
       bio: users.bio,
       birthday: users.birthdate,
+      avatarUrl: users.avatarUrl,
     })
     .from(users)
     .leftJoin(settings, eq(users.id, settings.userId))
@@ -80,6 +81,21 @@ export async function updateUserPassword(
     .set({
       password: newHashPassword,
       salt: newSalt,
+    })
+    .where(eq(users.id, userId));
+}
+
+export async function updateUserAvatar(
+  db: DBClient,
+  userId: number,
+  avatarUrl: string,
+  avatarPublicId: string,
+) {
+  return await db
+    .update(users)
+    .set({
+      avatarUrl,
+      avatarPublicId,
     })
     .where(eq(users.id, userId));
 }

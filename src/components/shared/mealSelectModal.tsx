@@ -32,7 +32,7 @@ export default function MealSelectionModal({
   mealName,
   mealId,
 }: MealSelectionModalProps) {
-  const [selected, setSelected] = useState<MealType>(null);
+  const [selected, setSelected] = useState<MealType>("");
   const [isPending, startTransition] = useTransition();
   const toast = useToast();
 
@@ -45,7 +45,7 @@ export default function MealSelectionModal({
             ? `${mealName} removed from favorites`
             : `${mealName} added to favorites`;
           toast(message, "success");
-          setSelected(null);
+          setSelected("");
           onClose();
         },
       );
