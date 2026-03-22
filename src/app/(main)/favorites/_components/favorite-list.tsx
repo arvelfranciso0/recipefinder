@@ -161,7 +161,7 @@ export default function FavoritesList({
             <div className="space-y-2">
               <SidebarItem
                 label={"All Recipes"}
-                count={dinnerCount + breakfastCount + lunchCount}
+                count={favoriteCount}
                 icon={Utensils}
                 id={"all-recipes"}
                 isActive={mealType === ""}

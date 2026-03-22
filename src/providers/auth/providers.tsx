@@ -16,14 +16,6 @@ export function AuthProvider({
   children: ReactNode;
   user: UserSettings | null;
 }) {
-  const { setTheme } = useTheme();
-
-  useEffect(() => {
-    if (user?.theme) {
-      setTheme(user.theme.toLowerCase());
-    }
-  }, [user, setTheme]);
-
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import LogoutPage from "@/app/(auth)/logout/logout";
 import { sideNavbar } from "@/libs/urls";
 import { getActiveClass } from "@/libs/utils";
 import { useAuth } from "@/providers/auth/providers";
@@ -45,13 +46,7 @@ export function SettingsSidebar() {
           );
         })}
         <div className="my-2 border-t border-gray-50 dark:border-white/5" />
-        <button
-          onClick={handleLogout}
-          className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-semibold"
-        >
-          <LogOut className="w-5 h-5" />
-          <span>Sign Out</span>
-        </button>
+        <LogoutPage />
       </nav>
     </aside>
   );

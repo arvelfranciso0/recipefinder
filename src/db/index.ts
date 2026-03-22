@@ -12,3 +12,6 @@ const pool = await mysql.createPool({
 export const db = drizzle({ client: pool });
 
 export type Database = typeof db;
+export type Transaction = Parameters<Parameters<Database["transaction"]>[0]>[0];
+
+export type DBClient = Database | Transaction;

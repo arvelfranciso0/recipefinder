@@ -15,6 +15,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { TheMealDbApiService } from "@/services/meal.service";
 import { categoriesData, mealsArea } from "./data";
 import { IngredientKeys, MeasureKeys } from "@/types/recipe-types";
+import { Crop } from "@/interface/image-interface";
 
 export const getActiveClass = (pathname: string, path: Url): boolean => {
   return pathname === path;
@@ -337,3 +338,52 @@ export const mealWithFavoriteToDTO = (
     ingredients: mapResultRecipeDetails,
   };
 };
+
+export async function getCroppedImg(
+  imageSrc: string,
+  pixelCrop: { x: number; y: number; width: number; height: number }, // Use pixelCrop from the cropper
+  fileName = "avatar.jpg",
+): Promise<File | null> {
+  const image = new Image();
+  image.src = imageSrc;
+
+  // Wait for the image to load properly
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = reject;
+  });
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    return null;
+  }
+
+  // Set canvas size to the size of the cropped area
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+
+  // Draw the specific cropped area onto the canvas
+  ctx.drawImage(
+    image,
+    pixelCrop.x,
+    pixelCrop.y,
+    pixelCrop.width,
+    pixelCrop.height,
+    0,
+    0,
+    pixelCrop.width,
+    pixelCrop.height,
+  );
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        resolve(null);
+        return;
+      }
+      resolve(new File([blob], fileName, { type: "image/jpeg" }));
+    }, "image/jpeg");
+  });
+}

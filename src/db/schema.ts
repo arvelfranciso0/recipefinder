@@ -22,6 +22,9 @@ export const users = mysqlTable("users", {
   birthdate: varchar("birthdate", { length: 255 }),
   salt: text("salt"),
   isEmailVerified: boolean("is_email_verified").default(false),
+  avatarUrl: text("avatar_url"),
+  avatarPublicId: text("avatar_public_id"),
+  bio: text("bio"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

@@ -1,12 +1,18 @@
-import { getUser } from "./_server";
+"use client";
+import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "./providers";
+import { UserSettings } from "@/types/user-types";
 
-export default async function Providers({
+export default function Providers({
   children,
+  user,
 }: {
   children: React.ReactNode;
+  user: UserSettings | null;
 }) {
-  const user = await getUser();
-
-  return <AuthProvider user={user}>{children}</AuthProvider>;
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <AuthProvider user={user}>{children}</AuthProvider>;
+    </ThemeProvider>
+  );
 }

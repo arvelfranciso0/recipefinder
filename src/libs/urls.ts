@@ -15,12 +15,12 @@ export const QuickLinks: UrlInterface[] = [
     href: "/settings",
     requiresAuth: true,
   },
-  {
-    id: "notifications",
-    label: "Notifications",
-    href: "/notifications",
-    requiresAuth: true,
-  },
+  // {
+  //   id: "notifications",
+  //   label: "Notifications",
+  //   href: "/notifications",
+  //   requiresAuth: true,
+  // },
   {
     id: "account",
     label: "Account",
@@ -60,16 +60,16 @@ export const QuickCategories: UrlInterface[] = [
 export const sideNavbar: sideNavbarInterface[] = [
   { icon: User, label: "Profile", href: "/settings/profile", active: false },
   { icon: Settings, label: "Account", href: "/settings/account", active: true },
-  {
-    icon: Sliders,
-    label: "Preferences",
-    href: "/settings/preference",
-    active: false,
-  },
-  {
-    icon: Bell,
-    label: "Notifications",
-    href: "/settings/notification",
-    active: false,
-  },
+  // {
+  //   icon: Sliders,
+  //   label: "Preferences",
+  //   href: "/settings/preference",
+  //   active: false,
+  // },
+  // {
+  //   icon: Bell,
+  //   label: "Notifications",
+  //   href: "/settings/notification",
+  //   active: false,
+  // },
 ];

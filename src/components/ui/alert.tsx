@@ -71,7 +71,7 @@ export default function Alert({
         {/* Content */}
         <div className="mb-8">
           {title && (
-            <h3 className="text-2xl font-black text-charcoal tracking-tight mb-2">
+            <h3 className="text-2xl font-black text-gray-900 tracking-tight mb-2">
               {title}
             </h3>
           )}

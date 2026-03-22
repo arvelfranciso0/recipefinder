@@ -1,5 +1,7 @@
 import { UserRoleType } from "@/types/role-type";
 import { Settings } from "./setting-type";
+import z from "zod";
+import { UpdateUserPasswordSchema } from "@/schemas/user";
 
 export type User = {
   id?: number;
@@ -7,6 +9,10 @@ export type User = {
   fullName: string;
   role: UserRoleType;
   isEmailVerified: boolean | null;
+  avatarUrl?: string | null;
+  birthday?: string | null;
+  bio?: string | null;
+  avatarPublicId?: string | null;
 };
 
 export type UserDetails = User & {
@@ -16,3 +22,5 @@ export type UserDetails = User & {
 };
 
 export type UserSettings = User & Pick<Settings, "theme">;
+
+export type UserUpdatePassordForm = z.infer<typeof UpdateUserPasswordSchema>;
