@@ -14,6 +14,7 @@ import { useToast } from "@/context/toastContext";
 import Modal from "@/components/ui/modal";
 import { UploadAvatarModal } from "./upload-avatar";
 import { MAX_SIZE } from "@/libs/constants";
+import { useRouter } from "next/navigation";
 
 interface ProfileFormProps {
   fullName?: string;
@@ -21,6 +22,7 @@ interface ProfileFormProps {
   bio: string | null;
   email: string | null;
   avatarUrl?: string | null;
+  avatarPublicId?: string | null;
 }
 export function ProfileForm({
   fullName,
@@ -28,9 +30,11 @@ export function ProfileForm({
   bio,
   email,
   avatarUrl,
+  avatarPublicId,
 }: ProfileFormProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const router = useRouter();
   const toast = useToast();
   const {
     register,
@@ -86,9 +90,11 @@ export function ProfileForm({
       toast("File size must be less than 1MB", "error");
       return;
     }
-    const result = await uploadProfilePictureAction(file);
+    const result = await uploadProfilePictureAction(file, avatarPublicId);
     if (result.status === "success") {
+      router.refresh();
       toast(result.message, result.status);
+      setShowUploadModal(false);
     } else {
       toast(result.message, result.status);
     }
@@ -116,7 +122,7 @@ export function ProfileForm({
             {isEditing && (
               <button
                 onClick={() => setShowUploadModal(true)}
-                className="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-xl shadow-lg border-2 border-white dark:border-gray-900 transition-transform active:scale-90 animate-in zoom-in"
+                className="absolute cursor-pointer -bottom-2 -right-2 bg-primary text-white p-2 rounded-xl shadow-lg border-2 border-white dark:border-gray-900 transition-transform active:scale-90 animate-in zoom-in"
               >
                 <Camera className="w-4 h-4" />
               </button>

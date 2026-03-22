@@ -35,6 +35,7 @@ export async function getUserSettingByUserId(userId: number) {
       bio: users.bio,
       birthday: users.birthdate,
       avatarUrl: users.avatarUrl,
+      avatarPublicId: users.avatarPublicId,
     })
     .from(users)
     .leftJoin(settings, eq(users.id, settings.userId))

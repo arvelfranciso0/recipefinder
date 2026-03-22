@@ -58,6 +58,7 @@ export default function ProfilePage() {
         bio={user.bio ?? ""}
         email={user.email}
         avatarUrl={user.avatarUrl}
+        avatarPublicId={user.avatarPublicId}
       />
       <ThemeSelector />
     </section>

@@ -52,6 +52,7 @@ export async function updateProfileActions(
 
 export async function uploadProfilePictureAction(
   file: File,
+  avatarPublicId?: string | null,
 ): Promise<{ message: string; status: ToastType }> {
   try {
     if (!file) {
@@ -73,6 +74,12 @@ export async function uploadProfilePictureAction(
         throw new Error("User not authenticated");
       }
       const cloudinaryService = new CloudinaryService();
+
+      if (avatarPublicId) {
+        const result = await cloudinaryService.deleteAvatar(avatarPublicId);
+
+        if (!result) throw new Error("Error occured on deleting the avatar.");
+      }
       const { secure_url: imageUrl, public_id: imagePublicId } =
         await cloudinaryService.uploadImage(file);
 

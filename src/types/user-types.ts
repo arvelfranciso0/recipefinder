@@ -12,6 +12,7 @@ export type User = {
   avatarUrl?: string | null;
   birthday?: string | null;
   bio?: string | null;
+  avatarPublicId?: string | null;
 };
 
 export type UserDetails = User & {

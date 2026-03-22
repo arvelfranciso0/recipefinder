@@ -3,8 +3,7 @@
 import { cookies } from "next/headers";
 import { generateCryptoHash } from "@/libs/utils";
 import { deleteAccessTokenByHashToken } from "@/repository/access_token";
-import { redirect } from "next/navigation";
-export async function logoutAction() {
+export async function logoutAction(): Promise<boolean> {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_session")?.value;
 
@@ -29,5 +28,5 @@ export async function logoutAction() {
     maxAge: 0,
   });
 
-  redirect("/login");
+  return true;
 }
